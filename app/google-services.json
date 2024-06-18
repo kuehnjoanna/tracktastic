@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "476426210355",
+    "firebase_url": "https://tracktastic-42c5b-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "tracktastic-42c5b",
+    "storage_bucket": "tracktastic-42c5b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:476426210355:android:4aaad7c8760db77ebae746",
+        "android_client_info": {
+          "package_name": "com.example.tracktastic"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsttdNwCGg4USxrZDuhrIXpOuU1aC7hXc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
