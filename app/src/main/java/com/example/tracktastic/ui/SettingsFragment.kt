@@ -12,6 +12,9 @@ import com.example.tracktastic.R
 import com.example.tracktastic.databinding.FragmentSettingsBinding
 import com.example.tracktastic.ui.viemodels.LoginViewModel
 import com.example.tracktastic.ui.viemodels.ProfileViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import okhttp3.HttpUrl.Companion.toHttpUrl
 
 
@@ -35,7 +38,16 @@ private lateinit var binding: FragmentSettingsBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-viewModel.loadBoyAvatar()
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val avatarBitmap = viewModel.repository.loadBoyAvatar()
+            if (avatarBitmap != null) {
+                binding.ivAvatar.setImageBitmap(avatarBitmap)
+            } else {
+
+                Log.d("settings", "no works")
+            }
+        }
 
     Log.d("avatar", viewModel.avatar.toString())
     }
