@@ -36,7 +36,7 @@ class ForgotPasswordFragment : Fragment() {
 
         binding.BTNResetPassword.setOnClickListener {
             val email = binding.ETResetPassword.text.toString()
-//using function in a VM to send email with link
+            //using function in a VM to send email with link
             viewModel.passwordReset(email)
             Toast.makeText(requireContext(), "check email", Toast.LENGTH_SHORT).show()
             findNavController().navigate(ForgotPasswordFragmentDirections.actionForgotPasswordFragmentToLoginFragment())
