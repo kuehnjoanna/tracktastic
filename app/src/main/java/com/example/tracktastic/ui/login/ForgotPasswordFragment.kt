@@ -34,11 +34,13 @@ class ForgotPasswordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //password reset
         binding.BTNResetPassword.setOnClickListener {
             val email = binding.ETResetPassword.text.toString()
             //using function in a VM to send email with link
             viewModel.passwordReset(email)
             Toast.makeText(requireContext(), "check email", Toast.LENGTH_SHORT).show()
+            //zuruck kommmen in die login fragment nachdem die funktion ausgefuhrt ist
             findNavController().navigate(ForgotPasswordFragmentDirections.actionForgotPasswordFragmentToLoginFragment())
 
 

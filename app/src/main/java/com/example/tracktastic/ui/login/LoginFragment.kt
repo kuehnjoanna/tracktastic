@@ -10,7 +10,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import coil.load
 import com.example.tracktastic.R
+import com.example.tracktastic.data.Repository
 import com.example.tracktastic.databinding.FragmentLoginBinding
 import com.example.tracktastic.ui.viemodels.LoginViewModel
 
@@ -35,10 +37,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //   if (viewModel.user != null) {
-        //        findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
-        //     }
-
+        //current user observer um zu blick halten wenn er sich andert und direkt reagieren
         viewModel.currentUser.observe(viewLifecycleOwner) { user ->
 
             if (user == null) {
@@ -46,17 +45,22 @@ class LoginFragment : Fragment() {
                 Log.d("CurrentUser", "Kein User eingeloggt")
             } else {
                 //User ist eingeloggt
+                //  viewModel.loadWallpaper()
                 Log.d("CurrentUser", user.uid)
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
             }
 
-binding.BTNForgotPasswordLogin.setOnClickListener {
-    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToForgotPasswordFragment())
-}
+            //navigieren zum forgot password fragment
+            binding.BTNForgotPasswordLogin.setOnClickListener {
+                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToForgotPasswordFragment())
+            }
+
+            //navigieren zu register fragment
             binding.TVRedirectToRegister.setOnClickListener {
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegisterFragment())
             }
 
+            //einloggen into Firebase wenn password oder email feflder NICHT leer sind
             binding.BTNLoginLogin.setOnClickListener {
                 Log.d(TAG, "Login Button works, ${viewModel.currentUser}")
                 val email = binding.ETuserEmailLogin.text.toString()

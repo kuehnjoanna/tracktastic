@@ -1,17 +1,15 @@
 package com.example.tracktastic.data.remote
 
-import com.example.tracktastic.data.model.AvatarResponse
+import com.example.tracktastic.data.model.WallpaperResponse
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Query
 
-
+//https://pixabay.com/photos/milky-way-night-sea-landscape-967967/
 //const val API_KEY = "34131f3f211b4ca69a5dcc638bb2997d"
-const val BASE_URL = "https://avatar.iran.liara.run/"
+const val BASE_URL =  "https://pixabay.com/api/"   //"https://avatar.iran.liara.run/"
 
 val moshi: Moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
@@ -21,16 +19,16 @@ val retrofit = Retrofit.Builder()
         BASE_URL
     ).build()
 
-interface AvatarApiService {
+interface WallpaperApiService {
 
-    @GET("public/boy")
-    suspend fun getBoyAvatar(): Call<AvatarResponse>
+    @GET("?key=44482891-25a4348e5d04e7daf44644db6&id=967967")
+    suspend fun getDefaultWallpaper(): WallpaperResponse
 
     @GET("public/girl")
-    suspend fun getGirlAvatar(): AvatarResponse
+    suspend fun getGirlAvatar(): WallpaperResponse
 
 }
 
-object AvatarApi {
-    val apiService: AvatarApiService by lazy { retrofit.create(AvatarApiService::class.java) }
+object WallpaperApi {
+    val apiService: WallpaperApiService by lazy { retrofit.create(WallpaperApiService::class.java) }
 }

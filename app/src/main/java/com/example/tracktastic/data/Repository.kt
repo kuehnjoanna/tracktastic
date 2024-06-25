@@ -5,33 +5,50 @@ import android.graphics.BitmapFactory
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.tracktastic.data.model.AvatarResponse
-import com.example.tracktastic.data.remote.AvatarApi
-import com.google.android.gms.common.internal.ImagesContract.URL
+import com.example.tracktastic.data.model.Hit
+import com.example.tracktastic.data.model.WallpaperResponse
+import com.example.tracktastic.data.remote.WallpaperApi
+import com.example.tracktastic.ui.viemodels.SettingsViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import java.io.ByteArrayOutputStream
 import java.net.HttpURLConnection
+import java.net.MalformedURLException
 import java.net.URL
+import java.util.UUID
 
-class Repository {
-    private val _avatarBoy = MutableLiveData<Any>()
-    val avatarBoy: LiveData<Any>
-        get() = _avatarBoy
+object Repository {
 
-    private val _avatarGirl = MutableLiveData<String>()
-    val avatarGirl: LiveData<String>
-        get() = _avatarGirl
+    //Api response result from get default wallpaper
+    private var _response = MutableLiveData<List<Hit>>()
+    val response: LiveData<List<Hit>>
+        get() = _response
+
+    //wallpaper URI
+    private var _uri = MutableLiveData<String>()
+    val uri: LiveData<String>
+        get() = _uri
 
     //boolean that is supposed to work according to internet connection
     var _isWorking = MutableLiveData<Boolean>(true)
     val isWorking: LiveData<Boolean>
         get() = _isWorking
 
+    //firebase reference um einfacher in den firebase path zu speichern
+    val firebaseReference =
+        FirebaseDatabase.getInstance().reference.child("Users")
 
+    init {
+        //to check how many instances of one repository i made
+        Log.d("Repository", "Repository erzeugt")
+    }
     suspend fun loadBoyAvatar(): Bitmap? {
         return withContext(Dispatchers.IO) {
             val url = URL("https://avatar.iran.liara.run/public/boy")
@@ -51,17 +68,116 @@ class Repository {
             }
         }
     }
-    suspend fun loadGirlAvatar() {
+
+    //funktion um default wallpaper vom api zu laden
+    suspend fun loadDefaultWallpaper() {
         try {
-            //getting all news from web
-            val response = AvatarApi.apiService.getGirlAvatar()
-            Log.d("ApiResponse", response.toString())
+            //getting WALLPAPER
+            val response = WallpaperApi.apiService.getDefaultWallpaper()
+            Log.d("ApiResponseAll", response.toString())
             _isWorking.postValue(true)
-            //
-            _avatarGirl.postValue(response.toString())
+            _response.postValue(response.hits)
+
+            //url that is used for downloading and uploading the picture into Firebase with upload function
+            val wallpaperURL = response.hits[0].largeImageURL.toString()
+            Log.d("ApiResponseURL", wallpaperURL)
+            upload(wallpaperURL, "wallpaperUrl"){
+                if (it !=null){
+                    Log.d("upload function", "success, ${uri}")// diese ist immer noch leer, aber*
+                }else{
+                    Log.d("upload function", "fail, ${uri}")
+                }
+
+            }
+
         }catch (e: Exception){
             Log.d("ApiResponse", "${e.message}")
             _isWorking.postValue(false)
         }
+       // return wallpaperURL
     }
+
+    //funktion die bild ausm firebase storage link zum firebase realtime schickt
+    suspend fun upload(string: String, path: String, onComplete: (String?) -> Unit) {
+        if (string.isNullOrEmpty()) {
+            //checking if parameter from the response is not null or empty
+            Log.e("upload", "Invalid URL: $string")
+            onComplete(null)
+            return
+        }
+        CoroutineScope(Dispatchers.IO).launch {
+            //giving random id to a picture
+            val imageName = UUID.randomUUID().toString()
+            //uri that is returned from downloading/uploading function
+            val imageUri = downloadImageAndUploadToFirebase(string, imageName)
+            //saving the uri to firebase reealtime database
+            firebaseReference.child(FirebaseAuth.getInstance().currentUser?.uid.toString()).child(path).setValue(imageUri).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    _uri.value = imageUri.toString()
+                    Log.d("uri", "success: " + uri.value.toString())
+                } else {
+
+                    Log.d("uri", "failure: " + uri.value.toString())
+                }
+            }
+            if (imageUri != null) {
+                Log.d("image to bytearray", "success: $imageUri")
+                withContext(Dispatchers.IO) {
+                    onComplete(imageUri)
+                }
+            } else {
+                Log.d("image to bytearray1", "fail")
+            }
+        }
+    }
+
+    //funktion die url von api ins bytearray umwandelt und zum firebase storage schickt
+    private suspend fun downloadImageAndUploadToFirebase(
+        imageUrl: String,
+        imageName: String
+    ): String? {
+        return withContext(Dispatchers.IO) {
+            //checking if imageurl is null or empty
+            val url = try {
+                URL(imageUrl)
+            } catch (e: MalformedURLException) {
+                Log.e("image to bytearray error", "Invalid URL: $imageUrl")
+                return@withContext null
+            }
+            //changing image to bitmap to download it and to byte array to upload it to firebase
+            val urlConnection = url.openConnection() as HttpURLConnection
+            try {
+                urlConnection.requestMethod = "GET"
+                urlConnection.connect()
+
+                if (urlConnection.responseCode == HttpURLConnection.HTTP_OK) {
+                    //Convert to bitmap
+                    val inputStream = urlConnection.inputStream
+                    val bitmap = BitmapFactory.decodeStream(inputStream)
+
+                    // Convert bitmap to byte array
+                    val baos = ByteArrayOutputStream()
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                    val data = baos.toByteArray()
+
+                    // Upload to Firebase Storage
+                    val storageRef = Firebase.storage.reference.child("images/$imageName.jpg")
+                    storageRef.putBytes(data).await()
+
+                    // Get download URL
+                    storageRef.downloadUrl.await().toString()
+
+                } else {
+                    null
+                }
+            } catch (e: Exception) {
+                Log.d("image to bytearray error", e.message.toString())
+                null
+            } finally {
+                urlConnection.disconnect()
+            }
+        }
+
+    }
+
 }
