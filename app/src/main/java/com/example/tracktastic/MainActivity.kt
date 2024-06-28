@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentOnAttachListener
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelStore
@@ -31,6 +32,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val viewModel: LoginViewModel by viewModels()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -111,7 +114,15 @@ class MainActivity : AppCompatActivity() {
 
         //default bottom taqb
         bottomNavigation.show(1)
+        if (binding.navHostFragment.equals(R.id.homeFragment)){
 
+            bottomNavigation.show(1)
+        } else if (binding.navHostFragment.equals(R.id.settingsFragment)){
+
+            bottomNavigation.show(3)
+        } else if (binding.navHostFragment.equals(R.id.setNewFragment)){
+            bottomNavigation.show(2)
+        }
 
         //falls ein fehler/exception kommt, wird er direkt als toast angezeigt
         viewModel.info.observe(this) {

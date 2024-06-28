@@ -1,15 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
     android:layout_height="match_parent"
     tools:context=".ui.SetNewFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#274907"
-        android:text="this is set new fragment" />
+        android:layout_height="wrap_content"
+        android:text="Set New Activity"
+        android:gravity="center"
+        android:textSize="40dp"/>
 
-</FrameLayout>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="200dp"
+        android:hint="name"
+        android:id="@+id/ETactivityNameNew"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="200dp"
+        android:hint="email"
+        android:visibility="invisible"
+        android:id="@+id/ETuserEmailNew"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="200dp"
+        android:visibility="invisible"
+        android:hint="password"
+        android:id="@+id/ETuserPasswordNew"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:id="@+id/BTNcreateNewActivity"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textStyle="italic"
+        android:text="create"
+        android:textSize="20dp"/>
+
+</LinearLayout>

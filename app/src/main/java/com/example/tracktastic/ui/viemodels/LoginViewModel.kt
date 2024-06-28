@@ -1,49 +1,31 @@
 package com.example.tracktastic.ui.viemodels
 
 import android.content.ContentValues
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.fragment.findNavController
 import com.example.tracktastic.data.Repository
-import com.example.tracktastic.ui.login.ForgotPasswordFragmentDirections
+import com.example.tracktastic.data.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
-import kotlinx.coroutines.withContext
-import java.io.ByteArrayOutputStream
-import java.net.HttpURLConnection
-import java.net.MalformedURLException
-import java.net.URL
-import java.util.UUID
 
 class LoginViewModel : ViewModel() {
 
-    private val database: FirebaseDatabase = FirebaseDatabase.getInstance()
-    private val reference: DatabaseReference = database.reference.child("Users")
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private var _backgroundPictureUrl = ""
-    val backgroundPictureUrl: String
-        get() = _backgroundPictureUrl
-
-    val firebaseReference =
-        FirebaseDatabase.getInstance().reference.child("Users")
-    //var user = auth.currentUser
     private val _currentUser = MutableLiveData<FirebaseUser?>(auth.currentUser)
     val currentUser: LiveData<FirebaseUser?>
         get() = _currentUser
+
+    //Firebase Dienst Instanzen laden
+    val firestoreDatabase = FirebaseFirestore.getInstance()
+    val usersCollectionReference = firestoreDatabase.collection("users")
+    var userDataDocumentReference: DocumentReference? = null
+
 
     // everything repository
     val repository = Repository
@@ -54,11 +36,21 @@ class LoginViewModel : ViewModel() {
     init {
         setUserEnvironment()
     }
+    fun setProfile(profile: User) {
+        if (userDataDocumentReference == null) {
+            //Funktion abbrechen
+            return
+        }
+        userDataDocumentReference!!.set(profile)
+    }
 
     fun setUserEnvironment() {
         val user = auth.currentUser
         _currentUser.postValue(user)
-
+        if (user != null) {
+            //Immer wenn der User eingeloggt ist muss diese Variable definiert sein
+            userDataDocumentReference = usersCollectionReference.document(user.uid)
+        }
     }
 
     fun loadWallpaper() {
@@ -78,13 +70,10 @@ class LoginViewModel : ViewModel() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(ContentValues.TAG, "createUserWithEmail:success")
-                    //anlegen user daten in realtime datacase
-
-                     firebaseReference.child(FirebaseAuth.getInstance().currentUser?.uid.toString()).child("userName").setValue(name)
-                     firebaseReference.child(FirebaseAuth.getInstance().currentUser?.uid.toString()).child("userEmail").setValue(email)
-
-
+                    //anlegen user daten in firestore
+                    val user = User(userName = name, userEmail = email)
                     setUserEnvironment()
+                    setProfile(user)
                 } else {
                     _info.value = "${task.exception!!.message}"
 

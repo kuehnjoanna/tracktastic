@@ -5,12 +5,15 @@ import android.graphics.BitmapFactory
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.tracktastic.data.model.ClickerActivity
 import com.example.tracktastic.data.model.Hit
 import com.example.tracktastic.data.model.WallpaperResponse
 import com.example.tracktastic.data.remote.WallpaperApi
 import com.example.tracktastic.ui.viemodels.SettingsViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.CoroutineScope
@@ -25,6 +28,12 @@ import java.net.URL
 import java.util.UUID
 
 object Repository {
+    //testing bevor database chang
+    val _clickertestllist = MutableLiveData<List<ClickerActivity>>()
+    val clicketestlist: LiveData<List<ClickerActivity>>
+        get() = _clickertestllist
+
+
 
     //Api response result from get default wallpaper
     private var _response = MutableLiveData<List<Hit>>()
@@ -111,6 +120,9 @@ object Repository {
             //uri that is returned from downloading/uploading function
             val imageUri = downloadImageAndUploadToFirebase(string, imageName)
             //saving the uri to firebase reealtime database
+
+            FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().currentUser?.uid.toString()).update("wallpaperUrl", imageUri)
+                /*
             firebaseReference.child(FirebaseAuth.getInstance().currentUser?.uid.toString()).child(path).setValue(imageUri).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     _uri.value = imageUri.toString()
@@ -120,6 +132,9 @@ object Repository {
                     Log.d("uri", "failure: " + uri.value.toString())
                 }
             }
+
+                 */
+
             if (imageUri != null) {
                 Log.d("image to bytearray", "success: $imageUri")
                 withContext(Dispatchers.IO) {

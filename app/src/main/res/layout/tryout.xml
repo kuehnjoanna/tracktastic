@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/ine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginVertical="10dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnClickerMinus"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:gravity="center"
+                android:text="-"
+                android:textSize="50sp"
+                app:cornerRadius="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/llClickerName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="@id/btnClickerPlus"
+                app:layout_constraintEnd_toStartOf="@id/btnClickerPlus"
+                app:layout_constraintStart_toEndOf="@+id/btnClickerMinus"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/tvClickerName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="name"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/tvClickerCount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="times click"
+                    android:textSize="40sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnClickerPlus"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_gravity="end"
+                android:gravity="center"
+                android:text="+"
+                android:textSize="50sp"
+                app:cornerRadius="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/etIncrement"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:layout_marginVertical="5dp"
+                android:layout_marginHorizontal="5dp"
+                android:background="@drawable/custom_edit_text"
+                android:hint="Increment"
+                android:textAlignment="center"
+                android:textColorHighlight="#4CAF50"
+                android:textColorHint="#9C27B0"
+                app:layout_constraintEnd_toStartOf="@id/etValue"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnClickerMinus" />
+
+            <EditText
+                android:id="@+id/etValue"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_margin="10dp"
+                android:layout_marginVertical="5dp"
+                android:background="@drawable/custom_edit_text"
+                android:hint="Value"
+                android:textAlignment="center"
+                android:textColorHighlight="#4CAF50"
+                android:textColorHint="#9C27B0"
+                app:layout_constraintEnd_toStartOf="@id/etDecrement"
+                app:layout_constraintStart_toEndOf="@id/etIncrement"
+                app:layout_constraintTop_toBottomOf="@id/btnClickerPlus"/>
+
+            <EditText
+                android:id="@+id/etDecrement"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginVertical="5dp"
+                android:background="@drawable/custom_edit_text"
+                android:hint="Decrement"
+                android:textAlignment="center"
+                android:textColorHighlight="#4CAF50"
+                android:textColorHint="#9C27B0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/etValue"
+                app:layout_constraintTop_toBottomOf="@id/btnClickerPlus" />
+
+            <Button
+                android:id="@+id/btnColorFont"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginVertical="5dp"
+                android:layout_marginHorizontal="5dp"
+                android:text="font"
+                app:layout_constraintEnd_toStartOf="@id/btnColorBackground"
+                app:layout_constraintBottom_toTopOf="@id/btnReset"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etValue" />
+            <Button
+                android:id="@+id/btnColorBackground"
+                android:layout_width="0dp"
+                android:layout_marginVertical="5dp"
+                android:layout_height="50dp"
+                android:text="backgr"
+                android:layout_marginHorizontal="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btnColorFont"
+                app:layout_constraintBottom_toTopOf="@id/btnReset"
+                app:layout_constraintTop_toBottomOf="@id/etValue" />
+
+            <Button
+                android:id="@+id/btnReset"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginVertical="5dp"
+                android:text="reset all values"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnColorBackground" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

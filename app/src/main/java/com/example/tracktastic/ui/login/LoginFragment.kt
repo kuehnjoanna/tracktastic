@@ -45,7 +45,7 @@ class LoginFragment : Fragment() {
                 Log.d("CurrentUser", "Kein User eingeloggt")
             } else {
                 //User ist eingeloggt
-                //  viewModel.loadWallpaper()
+                // viewModel.loadWallpaper()
                 Log.d("CurrentUser", user.uid)
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
             }
@@ -62,6 +62,7 @@ class LoginFragment : Fragment() {
 
             //einloggen into Firebase wenn password oder email feflder NICHT leer sind
             binding.BTNLoginLogin.setOnClickListener {
+
                 Log.d(TAG, "Login Button works, ${viewModel.currentUser}")
                 val email = binding.ETuserEmailLogin.text.toString()
                 val password = binding.ETuserPasswordLogin.text.toString()
