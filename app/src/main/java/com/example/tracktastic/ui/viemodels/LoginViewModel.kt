@@ -50,6 +50,8 @@ class LoginViewModel : ViewModel() {
         if (user != null) {
             //Immer wenn der User eingeloggt ist muss diese Variable definiert sein
             userDataDocumentReference = usersCollectionReference.document(user.uid)
+        }else{
+           // userDataDocumentReference!!.set(user)
         }
     }
 
@@ -61,19 +63,44 @@ class LoginViewModel : ViewModel() {
 
         }
     }
+    fun loadAvatar(name: String) {
+        viewModelScope.launch {
 
+            Repository.loadDefaultAvatar(name)
+
+
+        }
+    }
+
+    fun isUserVerified (): Boolean{
+
+           if ( auth.currentUser!!.isEmailVerified){
+               return true
+           }else{
+               _info.value = "Please Verify your email first"
+               return false
+           }
+       return false
+
+    }
     fun signUpWithFirebase(email: String, password: String, name: String) {
         //funktion die in firebase account macht
 
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(ContentValues.TAG, "createUserWithEmail:success")
-                    //anlegen user daten in firestore
-                    val user = User(userName = name, userEmail = email)
-                    setUserEnvironment()
-                    setProfile(user)
+                    auth.currentUser?.sendEmailVerification()?.addOnCompleteListener {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(ContentValues.TAG, "createUserWithEmail:success")
+                        //anlegen user daten in firestore
+                        val user = User(userName = name, userEmail = email)
+                        setUserEnvironment()
+                        setProfile(user)
+                        loadWallpaper()
+                        loadAvatar(name)
+                        _info.value = "Please verify your email"
+                    }
+
                 } else {
                     _info.value = "${task.exception!!.message}"
 

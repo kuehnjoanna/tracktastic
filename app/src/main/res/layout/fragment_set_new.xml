@@ -2,47 +2,93 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".ui.SetNewFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Set New Activity"
         android:gravity="center"
-        android:textSize="40dp"/>
+        android:text="Set New Activity"
+        android:textSize="40dp" />
 
     <EditText
+        android:id="@+id/ETactivityNameNew"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minWidth="200dp"
         android:hint="name"
-        android:id="@+id/ETactivityNameNew"/>
-    <EditText
-        android:layout_width="wrap_content"
+        android:minWidth="200dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center"
         android:layout_height="wrap_content"
-        android:minWidth="200dp"
-        android:hint="email"
-        android:visibility="invisible"
-        android:id="@+id/ETuserEmailNew"/>
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/BTNpickTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="time"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/tvTimeSelected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="time"
+                android:textSize="40dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/BTNpickDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="date"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/tvDateSelected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="date"
+                android:textSize="40dp" />
+        </LinearLayout>
+    </LinearLayout>
 
     <EditText
+        android:id="@+id/ETuserPasswordNew"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minWidth="200dp"
-        android:visibility="invisible"
         android:hint="password"
-        android:id="@+id/ETuserPasswordNew"/>
+        android:minWidth="200dp"
+        android:visibility="invisible" />
 
     <Button
-        android:layout_width="wrap_content"
         android:id="@+id/BTNcreateNewActivity"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textStyle="italic"
         android:text="create"
-        android:textSize="20dp"/>
+        android:textSize="20dp"
+        android:textStyle="italic" />
 
 </LinearLayout>

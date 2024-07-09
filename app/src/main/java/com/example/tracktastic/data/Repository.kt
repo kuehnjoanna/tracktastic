@@ -7,13 +7,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.tracktastic.data.model.ClickerActivity
 import com.example.tracktastic.data.model.Hit
-import com.example.tracktastic.data.model.WallpaperResponse
 import com.example.tracktastic.data.remote.WallpaperApi
-import com.example.tracktastic.ui.viemodels.SettingsViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.CoroutineScope
@@ -25,7 +22,6 @@ import java.io.ByteArrayOutputStream
 import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.URL
-import java.util.UUID
 
 object Repository {
     //testing bevor database chang
@@ -58,9 +54,9 @@ object Repository {
         //to check how many instances of one repository i made
         Log.d("Repository", "Repository erzeugt")
     }
-    suspend fun loadBoyAvatar(): Bitmap? {
+    suspend fun loadAvatar(first:String, second:String): Bitmap? {
         return withContext(Dispatchers.IO) {
-            val url = URL("https://avatar.iran.liara.run/public/boy")
+            val url = URL("https://avatar.iran.liara.run/username?username=$first+$second")
             val urlConnection = url.openConnection() as HttpURLConnection
             try {
                 urlConnection.requestMethod = "GET"
@@ -78,6 +74,31 @@ object Repository {
         }
     }
 
+    suspend fun loadDefaultAvatar(first:String) {
+        try {
+            //getting Avatar
+            Log.d("avatarresponsel", "https://avatar.iran.liara.run/username?username=$first&length=1")
+
+
+            //url that is used for downloading and uploading the picture into Firebase with upload function
+            val avatarURL = "https://avatar.iran.liara.run/username?username=$first&length=1"
+            Log.d("ApiResponseURL", avatarURL)
+            //uploading wallpaper
+            upload(avatarURL, "avatarUrl"){
+                if (it !=null){
+                    Log.d("upload function", "success, ${uri}")// diese ist immer noch leer, aber*
+                }else{
+                    Log.d("upload function", "fail, ${uri}")
+                }
+
+            }
+
+        }catch (e: Exception){
+            Log.d("AvatarResponse", "${e.message}")
+
+        }
+        // return avatarUrl
+    }
     //funktion um default wallpaper vom api zu laden
     suspend fun loadDefaultWallpaper() {
         try {
@@ -90,6 +111,7 @@ object Repository {
             //url that is used for downloading and uploading the picture into Firebase with upload function
             val wallpaperURL = response.hits[0].largeImageURL.toString()
             Log.d("ApiResponseURL", wallpaperURL)
+            //uploading wallpaper
             upload(wallpaperURL, "wallpaperUrl"){
                 if (it !=null){
                     Log.d("upload function", "success, ${uri}")// diese ist immer noch leer, aber*
@@ -115,25 +137,13 @@ object Repository {
             return
         }
         CoroutineScope(Dispatchers.IO).launch {
-            //giving random id to a picture
-            val imageName = UUID.randomUUID().toString()
+            //giving user id + wallpaper name to a picture
+            val imageName = FirebaseAuth.getInstance().currentUser?.uid.toString() + path
             //uri that is returned from downloading/uploading function
             val imageUri = downloadImageAndUploadToFirebase(string, imageName)
             //saving the uri to firebase reealtime database
 
-            FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().currentUser?.uid.toString()).update("wallpaperUrl", imageUri)
-                /*
-            firebaseReference.child(FirebaseAuth.getInstance().currentUser?.uid.toString()).child(path).setValue(imageUri).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    _uri.value = imageUri.toString()
-                    Log.d("uri", "success: " + uri.value.toString())
-                } else {
-
-                    Log.d("uri", "failure: " + uri.value.toString())
-                }
-            }
-
-                 */
+            FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().currentUser?.uid.toString()).update(path, imageUri)
 
             if (imageUri != null) {
                 Log.d("image to bytearray", "success: $imageUri")

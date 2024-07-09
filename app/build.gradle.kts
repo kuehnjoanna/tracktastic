@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.firebase.storage.ktx)
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.messaging)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -85,5 +86,7 @@ dependencies {
     //navi
 
     implementation("com.github.qamarelsafadi:CurvedBottomNavigation:0.1.3")
+
+
 
 }

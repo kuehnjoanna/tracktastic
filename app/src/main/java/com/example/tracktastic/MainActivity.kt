@@ -26,12 +26,23 @@ import com.example.tracktastic.ui.HomeFragment
 import com.example.tracktastic.ui.SetNewFragment
 import com.example.tracktastic.ui.SettingsFragment
 import com.example.tracktastic.ui.viemodels.LoginViewModel
+import com.example.tracktastic.utils.NavHelper
 import com.qamar.curvedbottomnaviagtion.CurvedBottomNavigation
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private val viewModel: LoginViewModel by viewModels()
+
+    companion object {
+        // you can put any unique id here, but because I am using Navigation Component I prefer to put it as
+        // the fragment id.
+         val HOME_ITEM = R.id.homeFragment
+         val OFFERS_ITEM = R.id.setNewFragment
+        val MORE_ITEM =  R.id.settingsFragment
+    }
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +51,27 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
+        val navController = navHostFragment.navController
+            val bottomNavigationItems = mutableListOf(
+                CurvedBottomNavigation.Model(HOME_ITEM, "Home", R.drawable.ic_android_black_24dp),
+                CurvedBottomNavigation.Model(OFFERS_ITEM, "SetNew", R.drawable.ic_android_black_24dp),
+                CurvedBottomNavigation.Model(MORE_ITEM, "Settings", R.drawable.ic_android_black_24dp),
+            )
+            binding.bottomNavigation.apply {
+                bottomNavigationItems.forEach { add(it) }
+                setOnClickMenuListener {
+                    navController.navigate(it.id)
+                }
+                show(HOME_ITEM)
+                // optional
+                setupNavController(navController)
+            }
+
+
+
+        //
+/*
         val bottomNavigation = binding.bottomNavigation
 
         //supporting navigation
@@ -70,31 +102,33 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+
         // adding functionality
         bottomNavigation.setOnClickMenuListener {
             when(it.id){
                 1->{
-                  //  navController.popBackStack(R.id.nav_graph, false)
+                    navController.popBackStack(R.id.nav_graph, false)
                     navController.navigate(R.id.homeFragment)
                 }
                 2->{
-                    //navController.popBackStack(R.id.nav_graph, false)
+                    navController.popBackStack(R.id.nav_graph, false)
                     navController.navigate(R.id.setNewFragment)
                 }
                 3->{
-                   //navController.popBackStack(R.id.nav_graph, false)
+                    navController.popBackStack(R.id.nav_graph, false)
                     navController.navigate(R.id.settingsFragment)
                 }
             }
 
         }
 
+
         //adding dialog on backpress if user wants to leave the app
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (navController.currentDestination?.id == R.id.homeFragment ||
-                    navController.currentDestination?.id == R.id.setNewFragment ||
-                    navController.currentDestination?.id == R.id.settingsFragment ||
+                    //navController.currentDestination?.id == R.id.setNewFragment ||
+                    //navController.currentDestination?.id == R.id.settingsFragment ||
                     binding.bottomNavigation.visibility.equals(View.GONE)
                 ) {
                     AlertDialog.Builder(this@MainActivity)
@@ -114,8 +148,7 @@ class MainActivity : AppCompatActivity() {
 
         //default bottom taqb
         bottomNavigation.show(1)
-        if (binding.navHostFragment.equals(R.id.homeFragment)){
-
+        if (NavHelper.isHome == true){
             bottomNavigation.show(1)
         } else if (binding.navHostFragment.equals(R.id.settingsFragment)){
 
@@ -123,7 +156,7 @@ class MainActivity : AppCompatActivity() {
         } else if (binding.navHostFragment.equals(R.id.setNewFragment)){
             bottomNavigation.show(2)
         }
-
+*/
         //falls ein fehler/exception kommt, wird er direkt als toast angezeigt
         viewModel.info.observe(this) {
 
@@ -134,6 +167,27 @@ class MainActivity : AppCompatActivity() {
                     Toast.LENGTH_LONG,
                 ).show()
                 Log.d(TAG, viewModel.info.value.toString())
+            }
+        }
+    }
+    // if you need your backstack of your items always back to home please override this method
+    override fun onBackPressed() {
+
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        if (navController.currentDestination!!.id == HOME_ITEM)
+            super.onBackPressed()
+        else {
+            when (navController.currentDestination!!.id) {
+                OFFERS_ITEM -> {
+                    navController.popBackStack(R.id.homeFragment, false)
+                }
+                MORE_ITEM -> {
+                    navController.popBackStack(R.id.homeFragment, false)
+                }
+                else -> {
+                    navController.navigateUp()
+                }
             }
         }
     }

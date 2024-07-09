@@ -4,7 +4,7 @@
     android:id="@+id/llClicker"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:layoutDescription="@xml/clicker_item_scene3">
+    app:layoutDescription="@xml/clicker_item_scene">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/clickItem"
@@ -14,7 +14,6 @@
         android:layout_marginVertical="5dp"
         app:cardBackgroundColor="#400C0C0C"
         app:cardCornerRadius="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:strokeColor="@color/black"
         app:strokeWidth="3dp">
@@ -25,12 +24,13 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="horizontal"
-            app:layoutDescription="@xml/clicker_item_xml_constraintlayout_scene3">
+            app:layoutDescription="@xml/clicker_item_xml_constraintlayout_scene">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnClickerMinus"
                 android:layout_width="wrap_content"
                 android:layout_height="100dp"
+                android:background="@drawable/click_effect"
                 android:backgroundTint="#000209"
                 android:gravity="center"
                 android:text="-"
@@ -66,6 +66,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="name"
+                    android:textColor="#768281"
+                    android:textColorHint="@color/white"
                     android:textSize="25sp"
                     android:visibility="gone" />
 
@@ -87,6 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="100dp"
                 android:layout_gravity="end"
+                android:background="@drawable/click_effect"
                 android:backgroundTint="#000209"
                 android:gravity="center"
                 android:text="+"

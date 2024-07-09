@@ -3,16 +3,12 @@ package com.example.tracktastic.ui.login
 import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import coil.load
-import com.example.tracktastic.R
-import com.example.tracktastic.data.Repository
 import com.example.tracktastic.databinding.FragmentLoginBinding
 import com.example.tracktastic.ui.viemodels.LoginViewModel
 
@@ -44,10 +40,14 @@ class LoginFragment : Fragment() {
                 //User ist nicht eingeloggt
                 Log.d("CurrentUser", "Kein User eingeloggt")
             } else {
-                //User ist eingeloggt
-                // viewModel.loadWallpaper()
-                Log.d("CurrentUser", user.uid)
-                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+                if (viewModel.isUserVerified() == true) {
+                        //User ist eingeloggt
+                        // viewModel.loadWallpaper()
+                        Log.d("CurrentUser", user.uid)
+                        findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+                    } else {
+
+                }
             }
 
             //navigieren zum forgot password fragment

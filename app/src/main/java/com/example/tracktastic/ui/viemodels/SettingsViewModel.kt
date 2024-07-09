@@ -1,24 +1,20 @@
 package com.example.tracktastic.ui.viemodels
 
-import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
 import com.example.tracktastic.data.Repository
 import com.example.tracktastic.data.model.ClickerActivity
 import com.example.tracktastic.data.model.User
+import com.example.tracktastic.utils.Calculations
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.UUID
 
 class SettingsViewModel : ViewModel() {
 
@@ -29,6 +25,16 @@ class SettingsViewModel : ViewModel() {
     private val _firebaseWallpaperUrl = MutableLiveData<String>()
     val firebaseWallpaperUrl: LiveData<String>
         get() = _firebaseWallpaperUrl
+
+
+    //data that comes from retriveDataFromFirebase function
+    private val _firebaseAvatarUrl = MutableLiveData<String>()
+    val firebaseAvatarUrl: LiveData<String>
+        get() = _firebaseAvatarUrl
+    //data that comes from retriveDataFromFirebase function
+    private val _firebaseName = MutableLiveData<String>()
+    val firebaseName: LiveData<String>
+        get() = _firebaseName
 
         //firebase firestore
 
@@ -41,19 +47,53 @@ class SettingsViewModel : ViewModel() {
 
 
 
-
     //testing evor database change
 
-   /* val selectedArticle = MutableLiveData<ClickerActivity>()
+  val selectedItem = MutableLiveData<ClickerActivity>()
     fun selectedActivityItem(it: ClickerActivity) {
-        selectedArticle.value = it
+        selectedItem.value = it
+    }
+    fun timesClicked(name:String, timesClicked: Int) {
+        firestoreReference.collection("activities").document(name).update("timesClicked", timesClicked)
+    }
+    fun updateClickerName(clicker: ClickerActivity, newName: String){
+        firestoreReference.collection("activities").document(clicker.id.toString()).update(clicker.name, newName)
+
+    }
+    fun lastClicked(id: Int){
+
+        firestoreReference.collection("activities").document(id.toString()).update("lastClickedAt",  Calculations.getCurrentDate())
+    }
+    fun plusClicked(clicker: ClickerActivity){
+        clicker.value = clicker.value + clicker.increment
+
+        firestoreReference.collection("activities").document(clicker.id.toString()).update("value", clicker.value)
+    }
+    fun minusClicked(clicker: ClickerActivity){
+        clicker.timesClicked = clicker.timesClicked - clicker.decrement
+
+        firestoreReference.collection("activities").document(clicker.id.toString()).update("value", clicker.value)
+    }
+    fun updateClickerDecrement(clicker: ClickerActivity, decrement: Int){
+        clicker.decrement = decrement
+
+        firestoreReference.collection("activities").document(clicker.id.toString()).update("decrement", clicker.decrement)
+    }
+    fun updateClickerIncrement(clicker: ClickerActivity, increment: Int){
+        clicker.increment = increment
+
+        firestoreReference.collection("activities").document(clicker.id.toString()).update("increment", clicker.increment)
+    }
+    fun updateClickerValue(clicker: ClickerActivity, value: Int){
+        clicker.value = value
+
+        firestoreReference.collection("activities").document(clicker.id.toString()).update("value", clicker.value)
     }
 
-    */
 
-    fun addNewClicker(name: String) {
-        val newClicker = ClickerActivity(name)
-        firestoreReference.collection("activities").document(name).set(newClicker)
+    fun addNewClicker(size: Int, name: String) {
+        val clicker = ClickerActivity(size, name)
+        firestoreReference.collection("activities").document(clicker.id.toString()).set(clicker)
 
 
     }
@@ -63,24 +103,9 @@ class SettingsViewModel : ViewModel() {
         Log.d("delete", "userId: ${repository.clicketestlist.value}")
     }
 
+
     //sollte ich eine user instance machen?
-    fun retrieveAcitivitiesFromDatabase() {
 
-        firestoreReference.addSnapshotListener { snapshot, error ->
-            if (error != null) {
-                Log.w(TAG, "Listen failed.", error)
-                return@addSnapshotListener
-            }
-            if (snapshot != null && snapshot.exists()) {
-                Log.d(TAG, "Current data: ${snapshot.data}")
-                val user = snapshot.toObject(User::class.java)
-                _firebaseWallpaperUrl.value = user!!.wallpaperUrl
-
-            } else {
-                Log.d(TAG, "Current data: null")
-            }
-        }
-    }
 
     fun retrieveListFromFirestore() {
 
@@ -109,6 +134,7 @@ class SettingsViewModel : ViewModel() {
                 repository._clickertestllist.postValue(newlist)
             } else {
                 Log.d(TAG, "Current data: null")
+              //  val activity = ClickerActivity() // zum evtl default acctivity zu geben
             }
 
             Log.d(TAG, "userId: ${repository.clicketestlist}")
@@ -126,6 +152,9 @@ class SettingsViewModel : ViewModel() {
                     Log.d(TAG, "Current data: ${snapshot.data}")
                     val user = snapshot.toObject(User::class.java)
                     _firebaseWallpaperUrl.value = user!!.wallpaperUrl
+                    _firebaseAvatarUrl.value = user.avatarUrl
+                    _firebaseName.value = user.userName
+
 
                 } else {
                     Log.d(TAG, "Current data: null")
@@ -136,7 +165,7 @@ class SettingsViewModel : ViewModel() {
 
         fun loadBoyAvatar() {
             CoroutineScope(Dispatchers.Main).launch {
-                val avatarBitmap = repository.loadBoyAvatar()
+                val avatarBitmap = repository.loadAvatar("jej", "lol")
                 if (avatarBitmap != null) {
                     Log.d("fetch", "works")
                 } else {

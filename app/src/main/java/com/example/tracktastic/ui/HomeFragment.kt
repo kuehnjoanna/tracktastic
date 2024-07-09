@@ -11,8 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.ItemTouchHelper.DOWN
-import androidx.recyclerview.widget.ItemTouchHelper.UP
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -24,8 +22,6 @@ import com.example.tracktastic.databinding.FragmentHomeBinding
 import com.example.tracktastic.ui.adapter.ActivityAdapter
 import com.example.tracktastic.ui.viemodels.LoginViewModel
 import com.example.tracktastic.ui.viemodels.SettingsViewModel
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Collections
 
 
@@ -54,11 +50,21 @@ class HomeFragment : Fragment() {
 
         settingsViewModel.retrieveDataFromDatabase()
         settingsViewModel.retrieveListFromFirestore()
+        binding.text.text = "hello,"
         settingsViewModel.firebaseWallpaperUrl.observe(viewLifecycleOwner) {
             binding.homelayout.load(settingsViewModel.firebaseWallpaperUrl.value)
             Log.d("firebasewallpa", settingsViewModel.firebaseWallpaperUrl.value!!)
 
+
         }
+        settingsViewModel.firebaseAvatarUrl.observe(viewLifecycleOwner){
+            binding.BTNSignOut.load(settingsViewModel.firebaseAvatarUrl.value)
+        }
+        settingsViewModel.firebaseName.observe(viewLifecycleOwner){
+            binding.text.text = "Hello, " + settingsViewModel.firebaseName.value.toString()
+        }
+
+
 
         viewModel.currentUser.observe(viewLifecycleOwner) {
             binding.BTNSignOut.setOnClickListener {
@@ -66,46 +72,48 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToLoginFragment())
 
             }
-
-            binding.fab.setOnClickListener {
-
-                FirebaseFirestore.getInstance().collection("users")
-                    .document(FirebaseAuth.getInstance().currentUser?.uid.toString())
-                    .collection("activities").document("lol").addSnapshotListener { value, error ->
-                    value?.data.toString()
-
-                    binding.text.text = value?.data?.get("lol").toString()
-
-
-                }
-
-                //   findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSetNewFragment())
-            }
         }
 
         val helper: SnapHelper = PagerSnapHelper()
         helper.attachToRecyclerView(binding.recyclerView)
         val itemClickedCallback: (ClickerActivity) -> Unit = {
-            //  settingsViewModel.selectedActivityItem(it)
+              settingsViewModel.selectedActivityItem(it)
 
+
+        }
+        binding.fab.setOnClickListener {
+        findNavController().navigate(R.id.timerFragment)
+        }
+        binding.tvSeeMore.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSettingsFragment())
         }
 
 
         settingsViewModel.repository.clicketestlist.observe(viewLifecycleOwner) {
+if (settingsViewModel.repository.clicketestlist.value == null){
 
-            adapter = ActivityAdapter(settingsViewModel.repository.clicketestlist.value!!, itemClickedCallback)
+}
+            adapter = ActivityAdapter(requireContext(), settingsViewModel.repository.clicketestlist.value!!, itemClickedCallback, SettingsViewModel())
             binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
             binding.recyclerView.adapter = adapter
-/////////////////////////////
+////////////////////////////////////////////////////// D E L E T E    B E I    S W I P E
 
             ItemTouchHelper(object :
-                ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+                ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
                 override fun onMove(
                     recyclerView: RecyclerView,
                     viewHolder: RecyclerView.ViewHolder,
                     target: RecyclerView.ViewHolder
                 ): Boolean {
-                    TODO("Not yet implemented")
+                    val adapter = recyclerView.adapter as ActivityAdapter
+                    val startPosition = viewHolder.adapterPosition
+
+                    val endPosition = target.adapterPosition
+
+
+                    Collections.swap(settingsViewModel.repository.clicketestlist.value!!, startPosition, endPosition)
+                    adapter.notifyItemMoved(startPosition,endPosition)
+                    return true
                 }
 
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -124,41 +132,17 @@ class HomeFragment : Fragment() {
                         }
                         .setNegativeButton("No") { _, _ ->
 
-                            adapter.notifyItemRemoved(viewHolder.adapterPosition)
+                            adapter.notifyDataSetChanged()
                         }
                         .show()
 
                 }
             }).attachToRecyclerView(binding.recyclerView)
 
-            /////////////////////
-            ItemTouchHelper(object :
-                ItemTouchHelper.SimpleCallback(UP or DOWN, 0) {
-                override fun onMove(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder
-                ): Boolean {
-                    val adapter = recyclerView.adapter as ActivityAdapter
-                    val startPosition = viewHolder.adapterPosition
-
-                    val endPosition = target.adapterPosition
-
-
-                    Collections.swap(settingsViewModel.repository.clicketestlist.value!!, startPosition, endPosition)
-                    adapter.notifyItemMoved(startPosition,endPosition)
-                    return true
-
-                }
-
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-
-
-                }
-            }).attachToRecyclerView(binding.recyclerView)
 
         }
     }
+
 
 
 }

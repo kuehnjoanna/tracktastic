@@ -8,12 +8,12 @@
         motion:constraintSetStart="@id/start"
         motion:duration="1000"
         motion:motionInterpolator="overshoot">
-       <KeyFrameSet>
-           <KeyAttribute
-               motion:motionTarget="@+id/cldetailSettings"
-               motion:framePosition="100"
-               android:alpha="1" android:rotationX="-72"/>
-       </KeyFrameSet>
+        <KeyFrameSet>
+            <KeyAttribute
+                motion:motionTarget="@+id/cldetailSettings"
+                motion:framePosition="100"
+                android:alpha="1" />
+        </KeyFrameSet>
         <OnClick />
         <OnClick />
     </Transition>
@@ -40,4 +40,5 @@
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintBottom_toBottomOf="parent" />
     </ConstraintSet>
+
 </MotionScene>
