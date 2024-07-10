@@ -48,7 +48,7 @@ class RegisterFragment : Fragment() {
                     //User ist eingeloggt
                     // viewModel.loadWallpaper()
                     Log.d("CurrentUser", user.uid)
-                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+                    findNavController().navigate(RegisterFragmentDirections.actionRegisterFragmentToHomeFragment())
                 } else {
 
                 }
@@ -59,6 +59,7 @@ class RegisterFragment : Fragment() {
 
             }
 
+
             binding.BTNcreateNewUser.setOnClickListener {
 
                 val userName = binding.ETuserNameNew.text.toString()
@@ -68,6 +69,7 @@ class RegisterFragment : Fragment() {
                 if (viewModel.isValidPassword(userPassword) == true) {
                     viewModel.signUpWithFirebase(userEmail, userPassword, userName)
 
+                    findNavController().navigate(R.id.loginFragment)
 
 
                 } else {

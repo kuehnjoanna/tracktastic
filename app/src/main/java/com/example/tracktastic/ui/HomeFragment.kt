@@ -22,6 +22,7 @@ import com.example.tracktastic.databinding.FragmentHomeBinding
 import com.example.tracktastic.ui.adapter.ActivityAdapter
 import com.example.tracktastic.ui.viemodels.LoginViewModel
 import com.example.tracktastic.ui.viemodels.SettingsViewModel
+import com.example.tracktastic.utils.StackLayoutManager
 import java.util.Collections
 
 
@@ -57,10 +58,10 @@ class HomeFragment : Fragment() {
 
 
         }
-        settingsViewModel.firebaseAvatarUrl.observe(viewLifecycleOwner){
+        settingsViewModel.firebaseAvatarUrl.observe(viewLifecycleOwner) {
             binding.BTNSignOut.load(settingsViewModel.firebaseAvatarUrl.value)
         }
-        settingsViewModel.firebaseName.observe(viewLifecycleOwner){
+        settingsViewModel.firebaseName.observe(viewLifecycleOwner) {
             binding.text.text = "Hello, " + settingsViewModel.firebaseName.value.toString()
         }
 
@@ -77,12 +78,13 @@ class HomeFragment : Fragment() {
         val helper: SnapHelper = PagerSnapHelper()
         helper.attachToRecyclerView(binding.recyclerView)
         val itemClickedCallback: (ClickerActivity) -> Unit = {
-              settingsViewModel.selectedActivityItem(it)
+            settingsViewModel.selectedActivityItem(it)
 
 
         }
         binding.fab.setOnClickListener {
-        findNavController().navigate(R.id.timerFragment)
+            viewModel.logOut()
+            findNavController().navigate(R.id.loginFragment)
         }
         binding.tvSeeMore.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSettingsFragment())
@@ -90,16 +92,30 @@ class HomeFragment : Fragment() {
 
 
         settingsViewModel.repository.clicketestlist.observe(viewLifecycleOwner) {
-if (settingsViewModel.repository.clicketestlist.value == null){
+            if (settingsViewModel.repository.clicketestlist.value!!.size == 0) {
+                binding.noactivities.visibility = View.VISIBLE
+                binding.recyclerView.visibility = View.GONE
+            }
+            binding.noactivities.visibility = View.GONE
+            binding.recyclerView.visibility = View.VISIBLE
+            adapter = ActivityAdapter(
+                requireContext(),
+                settingsViewModel.repository.clicketestlist.value!!,
+                itemClickedCallback,
+                SettingsViewModel()
+            )
+            //  binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-}
-            adapter = ActivityAdapter(requireContext(), settingsViewModel.repository.clicketestlist.value!!, itemClickedCallback, SettingsViewModel())
-            binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+            binding.recyclerView.layoutManager = StackLayoutManager(StackLayoutManager.VERTICAL, true, 70, false)
+
             binding.recyclerView.adapter = adapter
 ////////////////////////////////////////////////////// D E L E T E    B E I    S W I P E
 
             ItemTouchHelper(object :
-                ItemTouchHelper.SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+                ItemTouchHelper.SimpleCallback(
+                    ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+                    ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+                ) {
                 override fun onMove(
                     recyclerView: RecyclerView,
                     viewHolder: RecyclerView.ViewHolder,
@@ -111,19 +127,24 @@ if (settingsViewModel.repository.clicketestlist.value == null){
                     val endPosition = target.adapterPosition
 
 
-                    Collections.swap(settingsViewModel.repository.clicketestlist.value!!, startPosition, endPosition)
-                    adapter.notifyItemMoved(startPosition,endPosition)
+                    Collections.swap(
+                        settingsViewModel.repository.clicketestlist.value!!,
+                        startPosition,
+                        endPosition
+                    )
+                    adapter.notifyItemMoved(startPosition, endPosition)
                     return true
                 }
 
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                     val id = adapter.dataset.get(viewHolder.adapterPosition)
-               // settingsViewModel.repository.testclickerlist.remove(id)
+                    // settingsViewModel.repository.testclickerlist.remove(id)
                     AlertDialog.Builder(requireContext())
                         .setTitle("Are you sure you want to delete this activity?")
                         .setPositiveButton("Yes") { _, _ ->
 
-                            settingsViewModel.firestoreReference.collection("activities").document(id.name)
+                            settingsViewModel.firestoreReference.collection("activities")
+                                .document(id.id.toString())
                                 .delete()
 
                             adapter.notifyItemRemoved(viewHolder.adapterPosition)  // Notify adapter about item removal
@@ -142,7 +163,6 @@ if (settingsViewModel.repository.clicketestlist.value == null){
 
         }
     }
-
 
 
 }

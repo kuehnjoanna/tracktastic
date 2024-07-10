@@ -3,6 +3,7 @@ package com.example.tracktastic.ui.adapter
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.recyclerview.widget.RecyclerView
@@ -40,9 +41,9 @@ class ActivityAdapter(
         holder.binding.tvClickerCount.text = data.value.toString()
 
         holder.binding.btnClickerPlus.setOnClickListener {
-            if (Calculations.getCurrentDate() == data.lastClickedAt){
+            if (Calculations.getCurrentDate() == data.lastClickedAt) {
                 Calculations.testToast(context)
-            }else {
+            } else {
                 data.timesClicked++
                 viewModel.timesClicked(data.id.toString(), data.timesClicked)
                 viewModel.plusClicked(data)
@@ -78,25 +79,14 @@ class ActivityAdapter(
             //vibration
             VibrationUtil.Vibration(context)
         }
-        holder.binding.llClickerName.setOnClickListener{
-            Log.d("onclicket", "knok, knock")
-
-            holder.binding.llClickerName.setOnClickListener{
-                if (holder.binding.etValue.editableText.isNotEmpty()){
-                   val value = holder.binding.etValue.editableText.toString()
-                    Log.d("onclicket", value)
-                    viewModel.updateClickerValue(data, value.toInt())
-                }
-                if (holder.binding.etIncrement.text != null){
-                    viewModel.updateClickerIncrement(data, holder.binding.etIncrement.text.toString().toInt() )
-                }
-                if (holder.binding.etDecrement.text != null){
-                    viewModel.updateClickerDecrement(data, holder.binding.etDecrement.text.toString().toInt() )
-                }
-
-
+        holder.binding.llClickerName.setOnClickListener {
+            if (holder.binding.cldetailSettings.visibility == View.VISIBLE) {
+                holder.binding.cldetailSettings.visibility = View.GONE
+                Log.d("onclicket", "tschüssi")
+            } else {
+                holder.binding.cldetailSettings.visibility = View.VISIBLE
+                Log.d("onclicket", "moin")
             }
-
         }
 
 

@@ -67,6 +67,47 @@ class MainActivity : AppCompatActivity() {
                 // optional
                 setupNavController(navController)
             }
+        navController.addOnDestinationChangedListener { navController: NavController, navDestination: NavDestination, bundle: Bundle? ->
+
+            if (navController.currentDestination!!.id == R.id.loginFragment ||
+                navController.currentDestination!!.id == R.id.splashScreenFragment ||
+                navController.currentDestination!!.id == R.id.registerFragment ||
+                navController.currentDestination!!.id == R.id.forgotPasswordFragment) {
+                binding.bottomNavigation.visibility = View.GONE
+            } else {
+                binding.bottomNavigation.visibility = View.VISIBLE
+            }
+        }
+        //adding dialog on backpress if user wants to leave the app
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (navController.currentDestination?.id == R.id.homeFragment ||
+                    //navController.currentDestination?.id == R.id.setNewFragment ||
+                    //navController.currentDestination?.id == R.id.settingsFragment ||
+                    binding.bottomNavigation.visibility.equals(View.GONE)
+                ) {
+                    AlertDialog.Builder(this@MainActivity)
+                        .setTitle("Are you sure you want to leave the app?")
+                        .setPositiveButton("Yes") { _, _ ->
+                            finish()
+                        }
+                        .setNegativeButton("No") { _, _ -> }
+                        .show()
+                } else {
+                    when (navController.currentDestination!!.id) {
+                        OFFERS_ITEM -> {
+                            navController.popBackStack(R.id.homeFragment, false)
+                        }
+                        MORE_ITEM -> {
+                            navController.popBackStack(R.id.homeFragment, false)
+                        }
+                        else -> {
+                            navController.navigateUp()
+                        }
+                    }
+                }
+            }
+        })
 
 
 
@@ -169,14 +210,29 @@ class MainActivity : AppCompatActivity() {
                 Log.d(TAG, viewModel.info.value.toString())
             }
         }
+
+
     }
+
+    /*
     // if you need your backstack of your items always back to home please override this method
     override fun onBackPressed() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
         val navController = navHostFragment.navController
-        if (navController.currentDestination!!.id == HOME_ITEM)
+        if (navController.currentDestination!!.id == R.id.homeFragment ||
+            //navController.currentDestination?.id == R.id.setNewFragment ||
+            //navController.currentDestination?.id == R.id.settingsFragment ||
+            binding.bottomNavigation.visibility.equals(View.GONE)) {
             super.onBackPressed()
+            AlertDialog.Builder(this@MainActivity)
+                .setTitle("Are you sure you want to leave the app?")
+                .setPositiveButton("Yes") { _, _ ->
+                    finish()
+                }
+                .setNegativeButton("No") { _, _ -> }
+                .show()
+        }
         else {
             when (navController.currentDestination!!.id) {
                 OFFERS_ITEM -> {
@@ -190,6 +246,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+
+     */
+
+
     }
 
-}
+

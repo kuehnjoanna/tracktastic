@@ -1,0 +1,21 @@
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/llClicker"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layoutDescription="@xml/clicker_item_scene">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/clickItem"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginVertical="5dp"
+        app:cardBackgroundColor="#400C0C0C"
+        app:cardCornerRadius="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/black"
+        app:strokeWidth="3dp">
+
+    </com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.motion.widget.MotionLayout>

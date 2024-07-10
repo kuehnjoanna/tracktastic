@@ -162,16 +162,4 @@ class SettingsViewModel : ViewModel() {
             }
 
         }
-
-        fun loadBoyAvatar() {
-            CoroutineScope(Dispatchers.Main).launch {
-                val avatarBitmap = repository.loadAvatar("jej", "lol")
-                if (avatarBitmap != null) {
-                    Log.d("fetch", "works")
-                } else {
-                    Log.d("fetch", "no works")
-                }
-
-            }
-        }
     }

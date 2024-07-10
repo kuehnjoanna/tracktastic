@@ -54,25 +54,7 @@ object Repository {
         //to check how many instances of one repository i made
         Log.d("Repository", "Repository erzeugt")
     }
-    suspend fun loadAvatar(first:String, second:String): Bitmap? {
-        return withContext(Dispatchers.IO) {
-            val url = URL("https://avatar.iran.liara.run/username?username=$first+$second")
-            val urlConnection = url.openConnection() as HttpURLConnection
-            try {
-                urlConnection.requestMethod = "GET"
-                urlConnection.connect()
 
-                if (urlConnection.responseCode == HttpURLConnection.HTTP_OK) {
-                    val inputStream = urlConnection.inputStream
-                    BitmapFactory.decodeStream(inputStream)
-                } else {
-                    null
-                }
-            } finally {
-                urlConnection.disconnect()
-            }
-        }
-    }
 
     suspend fun loadDefaultAvatar(first:String) {
         try {
@@ -182,11 +164,11 @@ object Repository {
 
                     // Convert bitmap to byte array
                     val baos = ByteArrayOutputStream()
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
                     val data = baos.toByteArray()
 
                     // Upload to Firebase Storage
-                    val storageRef = Firebase.storage.reference.child("images/$imageName.jpg")
+                    val storageRef = Firebase.storage.reference.child("images/$imageName.png")
                     storageRef.putBytes(data).await()
 
                     // Get download URL

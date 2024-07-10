@@ -42,6 +42,7 @@ class LoginViewModel : ViewModel() {
             return
         }
         userDataDocumentReference!!.set(profile)
+
     }
 
     fun setUserEnvironment() {
@@ -99,7 +100,7 @@ class LoginViewModel : ViewModel() {
                         loadWallpaper()
                         loadAvatar(name)
                         _info.value = "Please verify your email"
-                    }
+                   }
 
                 } else {
                     _info.value = "${task.exception!!.message}"
