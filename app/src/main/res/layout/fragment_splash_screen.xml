@@ -8,12 +8,10 @@
     tools:context=".ui.login.SplashScreenFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <VideoView
+        android:id="@+id/videoView"
         android:layout_width="match_parent"
-        android:gravity="center"
-        android:textSize="50dp"
-        android:id="@+id/splashscreen"
-        android:layout_height="wrap_content"
-        android:text="SplashScreen!" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>

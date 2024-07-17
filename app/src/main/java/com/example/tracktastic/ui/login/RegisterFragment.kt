@@ -54,10 +54,14 @@ class RegisterFragment : Fragment() {
                 }
             }
 
-            binding.btnBack.setOnClickListener {
+            binding.loginRedirectText.setOnClickListener {
                 findNavController().navigate(R.id.loginFragment)
 
             }
+
+
+
+
 
 
             binding.BTNcreateNewUser.setOnClickListener {

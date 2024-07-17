@@ -3,58 +3,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_gravity="center"
-    android:gravity="center"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.login.LoginFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Login"
-        android:textSize="50dp"/>
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minWidth="200dp"
-        android:hint="email"
-        android:id="@+id/ETuserEmailLogin"/>
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minWidth="200dp"
-        android:hint="password"
-        android:id="@+id/ETuserPasswordLogin"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:id="@+id/BTNForgotPasswordLogin"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textStyle="italic"
-        android:textColor="#F44336"
-        android:text="ForgotPassword?"
-        android:textSize="20dp"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/BTNLoginLogin"
-        android:text="LOGIN"/>
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="You dont have an account yet?"
-        android:textSize="20dp"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:id="@+id/TVRedirectToRegister"
-        android:text="Create one here"
-        android:textColor="#FF5722"
-        android:textStyle="bold|italic"
-        android:textSize="30dp"/>
+        android:orientation="vertical"
+        android:layout_marginTop="250dp"
+        android:padding="20dp">
+
+        <EditText
+            android:layout_width="350dp"
+            android:layout_height="60dp"
+            android:id="@+id/ETuserEmailLogin"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/border_shape"
+            android:padding="8dp"
+            android:inputType="textEmailAddress"
+            android:autofillHints="emailAddress"
+            android:hint="@string/email"
+            android:drawableTint="@color/lavender"
+            android:drawableStart="@drawable/baseline_email_24"
+            android:drawablePadding="8dp"
+            android:textColor="@color/grey" />
+
+        <EditText
+            android:layout_width="350dp"
+            android:layout_height="60dp"
+            android:autofillHints="password"
+            android:drawableTint="@color/lavender"
+            android:id="@+id/ETuserPasswordLogin"
+            android:layout_marginTop="20dp"
+            android:inputType="textPassword"
+            android:background="@drawable/border_shape"
+            android:padding="8dp"
+            android:hint="@string/password"
+            android:drawableStart="@drawable/baseline_lock_24"
+            android:drawablePadding="8dp"
+            android:textColor="@color/grey" />
+
+        <Button
+            android:layout_width="350dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/login"
+            android:id="@+id/BTNLoginLogin"
+            android:textSize="18sp"
+            app:cornerRadius="30dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/BTNForgotPasswordLogin"
+            android:layout_gravity="center"
+            android:layout_marginTop="6dp"
+            android:padding="8dp"
+            android:text="Forgot Password?"
+            android:textColor="@color/lavender"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/TVRedirectToRegister"
+            android:text="Not yet registered? Signup"
+            android:layout_gravity="center"
+            android:padding="8dp"
+            android:layout_marginTop="14dp"
+            android:textSize="18sp"
+            android:textColor="@color/lavender" />
+    </LinearLayout>
+
 
 </LinearLayout>

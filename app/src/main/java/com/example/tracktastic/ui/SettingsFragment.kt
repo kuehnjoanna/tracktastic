@@ -10,15 +10,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import coil.load
 import com.example.tracktastic.R
+import com.example.tracktastic.databinding.ConfirmDialogBinding
 import com.example.tracktastic.databinding.FragmentSettingsBinding
 import com.example.tracktastic.ui.viemodels.SettingsViewModel
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.ktx.Firebase
 
 
 class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
-    private val viewModel: SettingsViewModel by activityViewModels()
+    private val settingsViewModel: SettingsViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,21 +36,41 @@ class SettingsFragment : Fragment() {
     override fun onStart() {
         super.onStart()
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //viewModel.loadWallpaper()
-        viewModel.retrieveDataFromDatabase()
+        settingsViewModel.retrieveDataFromDatabase()
 
-        viewModel.firebaseWallpaperUrl.observe(viewLifecycleOwner) {
-            binding.ivWallpaper.load(viewModel.firebaseWallpaperUrl.value)
-            Log.d("firebasewallpa", viewModel.firebaseWallpaperUrl.value!!)
+        settingsViewModel.firebaseWallpaperUrl.observe(viewLifecycleOwner) {
+            //   binding.ivWallpaper.load(viewModel.firebaseWallpaperUrl.value)
+            Log.d("firebasewallpa", settingsViewModel.firebaseWallpaperUrl.value!!)
+            binding.ivWallpaper.load(R.drawable.testbg)
 
         }
-        viewModel.firebaseAvatarUrl.observe(viewLifecycleOwner){
-            binding.ivAvatar.load(viewModel.firebaseAvatarUrl.value)
+        settingsViewModel.firebaseAvatarUrl.observe(viewLifecycleOwner) {
+            binding.ivAvatar.load(settingsViewModel.firebaseAvatarUrl.value)
         }
+        settingsViewModel.currentUser.observe(viewLifecycleOwner) {
+            binding.delete.setOnClickListener {
+                DialogsAndToasts.addDialog(
+                    requireContext(),
+                    R.string.dialog_account_delete,
+                    ConfirmDialogBinding.inflate(layoutInflater)
+                ) {
+                    settingsViewModel.deleteAccoount(
+                        requireContext(),
+                        R.string.toast_account_deleted,
+                        R.string.toast_something_went_wrong
+                    )
+                }
+                findNavController().navigate(R.id.loginFragment)
+            }
+        }
+
 
         binding.Name.setOnClickListener {
-            findNavController().navigate(R.id.loginFragment)
+            findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToDesignFragment())
         }
-    }}
+    }
+}

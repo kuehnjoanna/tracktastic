@@ -42,7 +42,7 @@ android {
         viewBinding = true
     }
 
-    buildFeatures{
+    buildFeatures {
         dataBinding = true
     }
 }
@@ -71,12 +71,12 @@ dependencies {
 
 
     //Retrofit
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
-    implementation ("com.squareup.moshi:moshi-kotlin:1.15.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.15.0")
 
     // Coil
-    implementation ("io.coil-kt:coil:2.4.0")
+    implementation("io.coil-kt:coil:2.4.0")
 
 
     //Room dependencies
@@ -87,6 +87,23 @@ dependencies {
 
     implementation("com.github.qamarelsafadi:CurvedBottomNavigation:0.1.3")
 
+
+    //picasso library
+
+    implementation("com.squareup.picasso:picasso:2.71828")
+
+    //color picker
+    implementation("com.github.novatien:SmartColorPicker:1.0.2")
+
+    //charts
+    // Charts
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    //Datastore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    //progressbar
+
+    implementation("com.mikhaellopez:circularprogressbar:3.1.0")
 
 
 }

@@ -18,7 +18,8 @@
         <ImageView
             android:id="@+id/homelayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:scaleType="fitXY" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -31,59 +32,62 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="5dp"
                 android:gravity="center"
+                android:layout_marginBottom="20dp"
                 android:orientation="vertical"
+                app:layout_constraintBottom_toTopOf="@id/LLtimerWidget"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
+
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/BTNSignOut"
+                    android:id="@+id/BTNProfile"
+                    android:layout_marginTop="10dp"
                     android:layout_marginHorizontal="10dp"
                     android:layout_width="60dp"
                     app:shapeAppearanceOverlay="@drawable/rounded_button_bg"
                     android:layout_height="60dp"
+                    android:src="@drawable/baseline_person_24"
                     android:layout_gravity="end"
-                    android:text="signOut"
-                    />
+                    android:text="signOut" />
 
                 <TextView
                     android:id="@+id/text"
+                    android:shadowColor="@color/black"
+                    android:outlineAmbientShadowColor="@color/black"
+                    android:shadowRadius="10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:layout_marginHorizontal="22dp"
                     android:gravity="center"
-                    android:text="Hello,"
+                    android:text="@string/hello"
                     android:textColor="@color/white"
-                    android:textSize="40sp" />
+                    android:textSize="45sp" />
 
                 <TextView
                     android:id="@+id/text2"
+                    android:shadowColor="@color/black"
+                    android:outlineAmbientShadowColor="@color/black"
+                    android:shadowRadius="10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="22dp"
                     android:gravity="start"
-                    android:text="nice to have you back"
+                    android:layout_marginBottom="15dp"
+                    android:text="@string/nice_to_have_you_back"
                     android:textColor="@color/white"
                     android:textSize="30sp" />
 
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/recyclerView" />
             </LinearLayout>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/LLstatisticWidget"
+                android:id="@+id/LLtimerWidget"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginVertical="20dp"
-                app:cardBackgroundColor="#400C0C0C"
-                android:layout_marginHorizontal="10dp"
+                android:layout_height="170dp"
+                android:layout_marginVertical="15dp"
+                app:cardBackgroundColor="@color/grey"
+                android:layout_marginHorizontal="23dp"
                 app:cardCornerRadius="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -92,44 +96,100 @@
                 app:strokeColor="@color/black"
                 app:strokeWidth="3dp">
 
+
                 <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="20dp"
-                    android:layout_marginHorizontal="20dp"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:gravity="start"
-                        android:text="Your statistics"
-                        android:textColor="@color/white"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                    <ImageButton
+                        android:id="@+id/playPauseTimer"
+                        android:layout_width="50dp"
+                        android:layout_marginHorizontal="30dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="32dp"
+                        android:background="@color/transparent"
+                        android:src="@drawable/baseline_play_circle_outline_24"
+                        android:scaleType="fitXY"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/flTimer" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start"
-                        android:gravity="start"
-                        android:text="You achieved 60% of your goal today \n and 48% of your total goal"
-                        android:textColor="@color/white"
-                        android:textSize="18sp" />
+                    <FrameLayout
+                        android:id="@+id/flTimer"
+                        android:layout_gravity="center"
+                        android:layout_width="140dp"
+                        android:layout_marginTop="3dp"
+                        android:layout_height="140dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.496"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.308">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:gravity="end"
-                        android:id="@+id/tvSeeMore"
-                        android:text="see more"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:textSize="15sp" />
+                        <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                            android:id="@+id/pbTimer"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            app:cpb_indeterminate_mode="false"
+                            app:cpb_round_border="true"
+                            app:cpb_background_progressbar_color_end="@color/lavender"
+                            app:cpb_background_progressbar_color_start="@color/white"
+                            app:cpb_progressbar_width="5dp"
+                            app:cpb_progressbar_color="@color/lavender"
+                            android:max="10"
+                            android:progress="10"
+                            android:rotation="-90"
+
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/tvTimeLeft"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/time"
+                                android:textStyle="bold"
+                                android:textSize="26sp"
+                                android:textColor="@color/white"
+                                android:gravity="center" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/time_left"
+                                android:textStyle="bold"
+                                android:gravity="center"
+                                android:textSize="20sp"
+                                android:textColor="@color/lavender" />
+                        </LinearLayout>
+                    </FrameLayout>
+
+                    <ImageButton
+                        android:id="@+id/btnStopTimer"
+                        android:layout_width="50dp"
+                        android:layout_marginHorizontal="30dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="32dp"
+                        android:background="@color/transparent"
+                        android:src="@drawable/baseline_stop_24"
+                        android:scaleType="fitXY"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/flTimer" />
+
+
                 </LinearLayout>
+
             </com.google.android.material.card.MaterialCardView>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -140,7 +200,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/LLstatisticWidget"/>
+                app:layout_constraintTop_toBottomOf="@+id/LLtimerWidget" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
@@ -151,8 +211,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/LLstatisticWidget"
-                app:spanCount="2"
+                app:layout_constraintTop_toBottomOf="@+id/LLtimerWidget"
                 tools:listitem="@layout/clicker_item" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

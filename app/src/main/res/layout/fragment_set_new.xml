@@ -23,6 +23,33 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="do you want to set reminders? no/yes how often" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="set amount of clicks per day, //one, more, unlmtd" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=" set a timer for tracking (set/disable) set: count up, count down, pomodoro: work/break" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="do you want to set a deadline ? if yes: days/months/specific time" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:gravity="center"
         android:layout_height="wrap_content"
         android:orientation="horizontal">

@@ -20,8 +20,10 @@ dependencyResolutionManagement {
         mavenCentral()
 
         maven(url = "https://jitpack.io")
-    }
-}
 
-rootProject.name = "Tracktastic"
-include(":app")
+
+    }
+
+    rootProject.name = "Tracktastic"
+    include(":app")
+}

@@ -7,12 +7,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tracktastic.data.Repository
+import com.example.tracktastic.data.model.ActivitiesStatistic
 import com.example.tracktastic.data.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
+import java.util.Calendar
 
 class LoginViewModel : ViewModel() {
 
@@ -36,12 +38,19 @@ class LoginViewModel : ViewModel() {
     init {
         setUserEnvironment()
     }
+
     fun setProfile(profile: User) {
         if (userDataDocumentReference == null) {
             //Funktion abbrechen
             return
         }
         userDataDocumentReference!!.set(profile)
+        val name = Calendar.getInstance()
+            .get(android.icu.util.Calendar.YEAR).toString() + "." + (Calendar.getInstance()
+            .get(android.icu.util.Calendar.MONTH) + 1).toString()
+        Log.d("name", name)
+        userDataDocumentReference!!.collection("statistics").document(name)
+            .set(ActivitiesStatistic())
 
     }
 
@@ -51,8 +60,8 @@ class LoginViewModel : ViewModel() {
         if (user != null) {
             //Immer wenn der User eingeloggt ist muss diese Variable definiert sein
             userDataDocumentReference = usersCollectionReference.document(user.uid)
-        }else{
-           // userDataDocumentReference!!.set(user)
+        } else {
+            // userDataDocumentReference!!.set(user)
         }
     }
 
@@ -64,6 +73,7 @@ class LoginViewModel : ViewModel() {
 
         }
     }
+
     fun loadAvatar(name: String) {
         viewModelScope.launch {
 
@@ -73,17 +83,20 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    fun isUserVerified (): Boolean{
+    fun isUserVerified(): Boolean {
+        if (auth.currentUser != null) {
 
-           if ( auth.currentUser!!.isEmailVerified){
-               return true
-           }else{
-               _info.value = "Please Verify your email first"
-               return false
-           }
-       return false
+            if (auth.currentUser!!.isEmailVerified) {
+                return true
+            } else {
+                _info.value = "Please Verify your email first"
+                return false
+            }
+        }
+        return false
 
     }
+
     fun signUpWithFirebase(email: String, password: String, name: String) {
         //funktion die in firebase account macht
 
@@ -100,7 +113,7 @@ class LoginViewModel : ViewModel() {
                         loadWallpaper()
                         loadAvatar(name)
                         _info.value = "Please verify your email"
-                   }
+                    }
 
                 } else {
                     _info.value = "${task.exception!!.message}"

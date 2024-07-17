@@ -9,7 +9,7 @@
         android:id="@+id/splashScreenFragment"
         android:name="com.example.tracktastic.ui.login.SplashScreenFragment"
         android:label="fragment_splash_screen"
-        tools:layout="@layout/fragment_splash_screen" >
+        tools:layout="@layout/fragment_splash_screen">
         <action
             android:id="@+id/action_splashScreenFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -18,7 +18,7 @@
         android:id="@+id/loginFragment"
         android:name="com.example.tracktastic.ui.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
@@ -33,7 +33,7 @@
         android:id="@+id/registerFragment"
         android:name="com.example.tracktastic.ui.login.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" >
+        tools:layout="@layout/fragment_register">
         <action
             android:id="@+id/action_registerFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
@@ -42,13 +42,10 @@
         android:id="@+id/homeFragment"
         android:name="com.example.tracktastic.ui.HomeFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_setNewFragment"
             app:destination="@id/setNewFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_timerFragment"
-            app:destination="@id/timerFragment" />
         <action
             android:id="@+id/action_homeFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
@@ -67,7 +64,7 @@
         android:id="@+id/forgotPasswordFragment"
         android:name="com.example.tracktastic.ui.login.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
-        tools:layout="@layout/fragment_forgot_password" >
+        tools:layout="@layout/fragment_forgot_password">
         <action
             android:id="@+id/action_forgotPasswordFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
@@ -76,7 +73,7 @@
         android:id="@+id/setNewFragment"
         android:name="com.example.tracktastic.ui.SetNewFragment"
         android:label="fragment_set_new"
-        tools:layout="@layout/fragment_set_new" >
+        tools:layout="@layout/fragment_set_new">
         <action
             android:id="@+id/action_setNewFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
@@ -85,15 +82,23 @@
         android:id="@+id/settingsFragment"
         android:name="com.example.tracktastic.ui.SettingsFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_settingsFragment_to_designFragment"
+            app:destination="@id/designFragment" />
+    </fragment>
     <fragment
         android:id="@+id/statisticsFragment"
         android:name="com.example.tracktastic.ui.StatisticsFragment"
         android:label="fragment_statistics"
         tools:layout="@layout/fragment_statistics" />
     <fragment
-        android:id="@+id/timerFragment"
-        android:name="com.example.tracktastic.ui.TimerFragment"
-        android:label="fragment_timer"
-        tools:layout="@layout/fragment_timer" />
+        android:id="@+id/designFragment"
+        android:name="com.example.tracktastic.ui.DesignFragment"
+        android:label="fragment_design"
+        tools:layout="@layout/fragment_design">
+        <action
+            android:id="@+id/action_designFragment_self"
+            app:destination="@id/designFragment" />
+    </fragment>
 </navigation>

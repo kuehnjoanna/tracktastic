@@ -1,60 +1,77 @@
 package com.example.tracktastic.ui
 
+import android.graphics.Color
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.tracktastic.R
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import com.example.tracktastic.databinding.FragmentStatisticsBinding
+import com.example.tracktastic.ui.viemodels.SettingsViewModel
+import com.github.mikephil.charting.components.Description
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [StatisticsFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class StatisticsFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var binding: FragmentStatisticsBinding
+    private val SettingsViewModel: SettingsViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_statistics, container, false)
+        binding = FragmentStatisticsBinding.inflate(layoutInflater)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment StatisticsFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            StatisticsFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        var list = mutableListOf<Pair<String, Float>>()
+        var list2 = mutableListOf<Pair<String, Float>>()
+        val entries = ArrayList<Entry>()
+        val entries2 = ArrayList<PieEntry>()
+        var index = 0
+        for (activity in SettingsViewModel.repository.clicketestlist.value!!) {
+            list.add(index, activity.name to activity.timeSpent.toFloat())
+            list2.add(index, activity.name to (activity.timesClicked.toFloat() * 10))
+            entries.add(Entry(index.toFloat(), activity.timesClicked.toFloat()))
+            entries2.add(PieEntry(activity.timesClicked.toFloat(), activity.name))
+            index++
+
+        }
+        Log.d("list1", list.toString())
+        Log.d("list2", list2.toString())
+
+        val dataSet2 = PieDataSet(entries2, "Sample Data")
+        dataSet2.colors = listOf(Color.RED, Color.GREEN, Color.BLUE)
+        dataSet2.valueTextColor = Color.BLACK
+        dataSet2.valueTextSize = 16f
+
+        val pieData = PieData(dataSet2)
+        binding.pieChart.data = pieData
+        val dataSet = LineDataSet(entries, "Sample Data")
+        dataSet.color = Color.BLUE
+        dataSet.valueTextColor = Color.BLACK
+
+        val lineData = LineData(dataSet)
+        binding.anotherchart.data = lineData
+
+        // Customize chart appearance
+        binding.anotherchart.description = Description().apply { text = "Sample Line Chart" }
+        binding.anotherchart.animateY(1000)
+
     }
+
 }

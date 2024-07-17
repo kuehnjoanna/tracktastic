@@ -6,5 +6,9 @@
     <color name="some">#765398</color>
     <color name="some2">#ff4567</color>
     <color name="some3">#567987</color>
-    <color name="transparent">#1657FF</color>
+    <color name="transparent">#007D7E80</color>
+    <color name="lavender">#8692f7</color>
+    <color name="yellow">#FFC107</color>
+    <color name="grey">#88000000</color>
+    <color name="greyisch">#400C0C0C</color>
 </resources>

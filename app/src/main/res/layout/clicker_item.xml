@@ -12,10 +12,10 @@
         android:layout_height="match_parent"
         android:layout_marginHorizontal="12dp"
         android:layout_marginVertical="5dp"
-        app:cardBackgroundColor="@color/black"
+        app:cardBackgroundColor="@color/greyisch"
         app:cardCornerRadius="20dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:strokeColor="@color/white"
+        app:strokeColor="@color/black"
         app:strokeWidth="3dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,15 +23,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:orientation="horizontal"
             app:layoutDescription="@xml/clicker_item_xml_constraintlayout_scene">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnClickerMinus"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@id/cldetailSettings"
                 android:background="@drawable/click_effect"
-                android:backgroundTint="#000209"
+                android:backgroundTint="@color/transparent"
                 android:gravity="center"
                 android:text="-"
                 android:textSize="50sp"
@@ -43,10 +43,11 @@
                 android:id="@+id/llClickerName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="@id/btnClickerPlus"
+                app:layout_constraintBottom_toTopOf="@id/cldetailSettings"
                 app:layout_constraintEnd_toStartOf="@id/btnClickerPlus"
                 app:layout_constraintStart_toEndOf="@+id/btnClickerMinus"
                 app:layout_constraintTop_toTopOf="parent">
@@ -59,17 +60,6 @@
                     android:text="name"
                     android:textColor="@color/white"
                     android:textSize="25sp" />
-
-                <EditText
-                    android:id="@+id/etClickerName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="name"
-                    android:textColor="#768281"
-                    android:textColorHint="@color/white"
-                    android:textSize="25sp"
-                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/tvClickerCount"
@@ -87,140 +77,79 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnClickerPlus"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:background="@drawable/click_effect"
-                android:backgroundTint="#000209"
+                android:backgroundTint="@color/transparent"
                 android:gravity="center"
                 android:text="+"
                 android:textSize="50sp"
                 app:cornerRadius="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/cldetailSettings" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cldetailSettings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
+                android:layout_marginVertical="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btnClickerPlus">
 
-                <EditText
-                    android:id="@+id/etIncrement"
-                    android:layout_width="0dp"
+                <ImageButton
+                    android:id="@+id/btnChangeColors"
+                    android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_margin="10dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_marginVertical="5dp"
-                    android:background="@drawable/custom_edit_text"
-                    android:hint="Increment"
-                    android:textAlignment="center"
-                    android:textColorHighlight="#4CAF50"
-                    android:textColorHint="#768281"
-                    app:layout_constraintEnd_toStartOf="@id/etValue"
+                    android:background="@color/transparent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/baseline_color_lens_24"
+                    app:layout_constraintEnd_toStartOf="@+id/btnItemSettings"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <ImageButton
+                    android:id="@+id/btnItemSettings"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@color/transparent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/baseline_settings_24"
+                    app:layout_constraintEnd_toStartOf="@+id/btnSetTimer"
+                    app:layout_constraintStart_toEndOf="@+id/btnChangeColors"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+
+                <ImageButton
+                    android:id="@+id/btnSetTimer"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:background="@color/transparent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/baseline_timer_24"
+                    app:layout_constraintEnd_toStartOf="@id/btnStopTimer"
+                    app:layout_constraintStart_toEndOf="@+id/btnItemSettings"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <EditText
-                    android:id="@+id/etValue"
-                    android:layout_width="0dp"
+                <ImageButton
+                    android:id="@+id/btnStopTimer"
+                    android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_margin="10dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_marginVertical="5dp"
-                    android:background="@drawable/custom_edit_text"
-                    android:hint="Value"
-                    android:textAlignment="center"
-                    android:textColorHighlight="#4CAF50"
-                    android:textColorHint="#768281"
-                    app:layout_constraintEnd_toStartOf="@id/etDecrement"
-                    app:layout_constraintStart_toEndOf="@id/etIncrement"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:background="@color/transparent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/baseline_timer_off_24"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/btnSetTimer"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <EditText
-                    android:id="@+id/etDecrement"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_margin="10dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_marginVertical="5dp"
-                    android:background="@drawable/custom_edit_text"
-                    android:hint="Decrement"
-                    android:textAlignment="center"
-                    android:textColorHighlight="#4CAF50"
-                    android:textColorHint="#768281"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/etValue"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <Button
-                    android:id="@+id/btnColorFont"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_marginVertical="5dp"
-                    android:backgroundTint="#000209"
-                    android:text="font"
-                    app:layout_constraintBottom_toTopOf="@id/btnReset"
-                    app:layout_constraintEnd_toStartOf="@id/btnColorBackground"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/etValue" />
-
-                <Button
-                    android:id="@+id/btnColorBackground"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_marginVertical="5dp"
-                    android:backgroundTint="#000209"
-                    android:text="backgr"
-                    android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/btnReset"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/btnColorFont"
-                    app:layout_constraintTop_toBottomOf="@id/etValue" />
-
-                <Button
-                    android:id="@+id/btnReset"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_marginVertical="5dp"
-                    android:backgroundTint="#000209"
-                    android:text="reset all values"
-                    android:textColor="#FB1919"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/etValue" />
-
-                <Button
-                    android:id="@+id/btncancel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_marginVertical="5dp"
-                    android:backgroundTint="#000209"
-                    android:text="x"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/btnSaveChanges"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/btnReset" />
-
-                <Button
-                    android:id="@+id/btnSaveChanges"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_marginVertical="5dp"
-                    android:backgroundTint="#000209"
-                    android:text="ok"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/btncancel"
-                    app:layout_constraintTop_toBottomOf="@id/btnReset" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

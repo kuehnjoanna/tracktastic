@@ -30,7 +30,6 @@ object Repository {
         get() = _clickertestllist
 
 
-
     //Api response result from get default wallpaper
     private var _response = MutableLiveData<List<Hit>>()
     val response: LiveData<List<Hit>>
@@ -56,31 +55,35 @@ object Repository {
     }
 
 
-    suspend fun loadDefaultAvatar(first:String) {
+    suspend fun loadDefaultAvatar(first: String) {
         try {
             //getting Avatar
-            Log.d("avatarresponsel", "https://avatar.iran.liara.run/username?username=$first&length=1")
+            Log.d(
+                "avatarresponsel",
+                "https://avatar.iran.liara.run/username?username=$first&length=1"
+            )
 
 
             //url that is used for downloading and uploading the picture into Firebase with upload function
             val avatarURL = "https://avatar.iran.liara.run/username?username=$first&length=1"
             Log.d("ApiResponseURL", avatarURL)
             //uploading wallpaper
-            upload(avatarURL, "avatarUrl"){
-                if (it !=null){
+            upload(avatarURL, "avatarUrl") {
+                if (it != null) {
                     Log.d("upload function", "success, ${uri}")// diese ist immer noch leer, aber*
-                }else{
+                } else {
                     Log.d("upload function", "fail, ${uri}")
                 }
 
             }
 
-        }catch (e: Exception){
+        } catch (e: Exception) {
             Log.d("AvatarResponse", "${e.message}")
 
         }
         // return avatarUrl
     }
+
     //funktion um default wallpaper vom api zu laden
     suspend fun loadDefaultWallpaper() {
         try {
@@ -88,26 +91,61 @@ object Repository {
             val response = WallpaperApi.apiService.getDefaultWallpaper()
             Log.d("ApiResponseAll", response.toString())
             _isWorking.postValue(true)
-            _response.postValue(response.hits)
+            // _response.postValue(response.hits)
 
             //url that is used for downloading and uploading the picture into Firebase with upload function
             val wallpaperURL = response.hits[0].largeImageURL.toString()
             Log.d("ApiResponseURL", wallpaperURL)
             //uploading wallpaper
-            upload(wallpaperURL, "wallpaperUrl"){
-                if (it !=null){
+            upload(wallpaperURL, "wallpaperUrl") {
+                if (it != null) {
                     Log.d("upload function", "success, ${uri}")// diese ist immer noch leer, aber*
-                }else{
+                } else {
                     Log.d("upload function", "fail, ${uri}")
                 }
 
             }
 
-        }catch (e: Exception){
+        } catch (e: Exception) {
             Log.d("ApiResponse", "${e.message}")
             _isWorking.postValue(false)
         }
-       // return wallpaperURL
+        // return wallpaperURL
+    }
+
+    suspend fun loadFeatherWallpaper() {
+        try {
+            //getting WALLPAPER
+            val response = WallpaperApi.apiService.getFeatherWallpaper()
+            Log.d("ApifeatherResponseAll", response.toString())
+            _isWorking.postValue(true)
+            _response.postValue(response.hits)
+
+            //url that is used for downloading and uploading the picture into Firebase with upload function
+            val wallpaperURL = response.hits[0].largeImageURL.toString()
+
+            Log.d("ApiFeatherResponseURL", wallpaperURL)
+            //uploading wallpaper
+            /*
+            upload(wallpaperURL, "wallpaperUrl"){
+                if (it !=null){
+                    Log.d("upload feather function", "success, ${uri}")// diese ist immer noch leer, aber*
+                }else{
+                    Log.d("upload feather function", "fail, ${uri}")
+                }
+
+            }
+
+             */
+
+        } catch (e: Exception) {
+            Log.d("ApifeatherResponse", "${e.message}")
+            _isWorking.postValue(false)
+
+        }
+        // return wallpaperURL
+
+
     }
 
     //funktion die bild ausm firebase storage link zum firebase realtime schickt
@@ -125,7 +163,9 @@ object Repository {
             val imageUri = downloadImageAndUploadToFirebase(string, imageName)
             //saving the uri to firebase reealtime database
 
-            FirebaseFirestore.getInstance().collection("users").document(FirebaseAuth.getInstance().currentUser?.uid.toString()).update(path, imageUri)
+            FirebaseFirestore.getInstance().collection("users")
+                .document(FirebaseAuth.getInstance().currentUser?.uid.toString())
+                .update(path, imageUri)
 
             if (imageUri != null) {
                 Log.d("image to bytearray", "success: $imageUri")
