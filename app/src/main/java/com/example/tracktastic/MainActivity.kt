@@ -1,24 +1,41 @@
 package com.example.tracktastic
 
+import android.Manifest
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.ContentValues.TAG
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import com.example.tracktastic.databinding.ActivityMainBinding
+import com.example.tracktastic.ui.viemodels.HomepageViewModel
 import com.example.tracktastic.ui.viemodels.LoginViewModel
 import com.qamar.curvedbottomnaviagtion.CurvedBottomNavigation
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private val CHANNEL_ID = "channel_id"
+    private val notificationId = 101
 
+    private val homepageViewModel: HomepageViewModel by viewModels()
     private val viewModel: LoginViewModel by viewModels()
 
     companion object {
@@ -32,6 +49,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        createNotificationChannel()
+        checkNotificationPermission()
+
+
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -44,6 +65,12 @@ class MainActivity : AppCompatActivity() {
             CurvedBottomNavigation.Model(OFFERS_ITEM, "SetNew", R.drawable.baseline_add_24),
             CurvedBottomNavigation.Model(MORE_ITEM, "Statistics", R.drawable.baseline_bar_chart_24),
         )
+        /*
+        binding.testbtn.setOnClickListener {
+            sendNotification("hey!", "hi", R.drawable.testbg)
+        }
+
+         */
         binding.bottomNavigation.apply {
             bottomNavigationItems.forEach { add(it) }
             setOnClickMenuListener {
@@ -98,94 +125,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-
-        //
-        /*
-                val bottomNavigation = binding.bottomNavigation
-
-                //supporting navigation
-                val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
-                val navController = navHostFragment.navController
-
-                //adding navigation elements
-                bottomNavigation.add(
-                    CurvedBottomNavigation.Model(1, "Home", R.drawable.ic_android_black_24dp)
-                )
-                bottomNavigation.add(
-                    CurvedBottomNavigation.Model(2, "SetNew", R.drawable.ic_android_black_24dp)
-                )
-                bottomNavigation.add(
-                    CurvedBottomNavigation.Model(3, "Settings", R.drawable.ic_android_black_24dp)
-                )
-
-                //hiding navigation from login/register screens
-                navController.addOnDestinationChangedListener { navController: NavController, navDestination: NavDestination, bundle: Bundle? ->
-
-                    if (navController.currentDestination!!.id == R.id.loginFragment ||
-                        navController.currentDestination!!.id == R.id.splashScreenFragment ||
-                        navController.currentDestination!!.id == R.id.registerFragment ||
-                        navController.currentDestination!!.id == R.id.forgotPasswordFragment) {
-                        binding.bottomNavigation.visibility = View.GONE
-                    } else {
-                        binding.bottomNavigation.visibility = View.VISIBLE
-                    }
-                }
-
-
-                // adding functionality
-                bottomNavigation.setOnClickMenuListener {
-                    when(it.id){
-                        1->{
-                            navController.popBackStack(R.id.nav_graph, false)
-                            navController.navigate(R.id.homeFragment)
-                        }
-                        2->{
-                            navController.popBackStack(R.id.nav_graph, false)
-                            navController.navigate(R.id.setNewFragment)
-                        }
-                        3->{
-                            navController.popBackStack(R.id.nav_graph, false)
-                            navController.navigate(R.id.settingsFragment)
-                        }
-                    }
-
-                }
-
-
-                //adding dialog on backpress if user wants to leave the app
-                onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-                    override fun handleOnBackPressed() {
-                        if (navController.currentDestination?.id == R.id.homeFragment ||
-                            //navController.currentDestination?.id == R.id.setNewFragment ||
-                            //navController.currentDestination?.id == R.id.settingsFragment ||
-                            binding.bottomNavigation.visibility.equals(View.GONE)
-                        ) {
-                            AlertDialog.Builder(this@MainActivity)
-                                .setTitle("Are you sure you want to leave the app?")
-                                .setPositiveButton("Yes") { _, _ ->
-                                    finish()
-                                }
-                                .setNegativeButton("No") { _, _ -> }
-                                .show()
-                        } else {
-                            navController.navigateUp()
-                        }
-                    }
-                })
-
-
-
-                //default bottom taqb
-                bottomNavigation.show(1)
-                if (NavHelper.isHome == true){
-                    bottomNavigation.show(1)
-                } else if (binding.navHostFragment.equals(R.id.settingsFragment)){
-
-                    bottomNavigation.show(3)
-                } else if (binding.navHostFragment.equals(R.id.setNewFragment)){
-                    bottomNavigation.show(2)
-                }
-        */
         //falls ein fehler/exception kommt, wird er direkt als toast angezeigt
         viewModel.info.observe(this) {
 
@@ -198,45 +137,89 @@ class MainActivity : AppCompatActivity() {
                 Log.d(TAG, viewModel.info.value.toString())
             }
         }
+        homepageViewModel.timerLogic.notification.observe(this) {
 
-
-    }
-
-    /*
-    // if you need your backstack of your items always back to home please override this method
-    override fun onBackPressed() {
-
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
-        val navController = navHostFragment.navController
-        if (navController.currentDestination!!.id == R.id.homeFragment ||
-            //navController.currentDestination?.id == R.id.setNewFragment ||
-            //navController.currentDestination?.id == R.id.settingsFragment ||
-            binding.bottomNavigation.visibility.equals(View.GONE)) {
-            super.onBackPressed()
-            AlertDialog.Builder(this@MainActivity)
-                .setTitle("Are you sure you want to leave the app?")
-                .setPositiveButton("Yes") { _, _ ->
-                    finish()
-                }
-                .setNegativeButton("No") { _, _ -> }
-                .show()
-        }
-        else {
-            when (navController.currentDestination!!.id) {
-                OFFERS_ITEM -> {
-                    navController.popBackStack(R.id.homeFragment, false)
-                }
-                MORE_ITEM -> {
-                    navController.popBackStack(R.id.homeFragment, false)
-                }
-                else -> {
-                    navController.navigateUp()
-                }
+            if (!homepageViewModel.timerLogic.notification.value.isNullOrEmpty()) {
+                sendNotification(
+                    "wow",
+                    homepageViewModel.timerLogic.notification.value.toString(),
+                    R.drawable.banner
+                )
             }
         }
 
 
-     */
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "Notification Title"
+            val descriptionText = "Notification Description"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+            }
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun checkNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            when {
+                ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) == PackageManager.PERMISSION_GRANTED -> {
+                    // Permission is already granted
+                    //  sendNotification()
+                }
+
+                else -> {
+                    // Request the permission
+                    requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                }
+            }
+        }
+    }
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            // sendNotification()
+        } else {
+            // Handle permission denial
+        }
+    }
+
+    fun sendNotification(title: String, description: String, picture: Int) {
+        val intent = Intent(this, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val pendingIntent: PendingIntent =
+            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+
+        val bitmap = BitmapFactory.decodeResource(applicationContext.resources, picture)
+        val bitmapLargeIcon =
+            BitmapFactory.decodeResource(applicationContext.resources, picture)
+        val builder = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.drawable.tracktastic_5)
+            .setContentTitle(title)
+            .setContentText(description)
+            .setLargeIcon(bitmapLargeIcon)
+            .setStyle(NotificationCompat.BigPictureStyle().bigPicture(bitmap))
+            .setContentIntent(pendingIntent)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+
+
+        with(NotificationManagerCompat.from(this)) {
+
+            notify(notificationId, builder.build())
+        }
+    }
 
 
 }

@@ -31,12 +31,18 @@ class LoginViewModel : ViewModel() {
 
     // everything repository
     val repository = Repository
+
     var _info = MutableLiveData<String?>(null)
     val info: LiveData<String?>
         get() = _info
 
     init {
         setUserEnvironment()
+    }
+
+    fun addNotificationtext(text: String) {
+
+        //   _notification.postValue(text)
     }
 
     fun setProfile(profile: User) {
@@ -162,6 +168,9 @@ class LoginViewModel : ViewModel() {
                     Log.d(ContentValues.TAG, "signInWithEmail:success, ${auth.currentUser}")
                     //   _loginSuccess.value = true
                     setUserEnvironment()
+
+                    LoginViewModel().usersCollectionReference.document(FirebaseAuth.getInstance().currentUser!!.uid)
+                        .update("userEmail", email)
 
                 } else {
                     // If sign in fails, display a message to the user.

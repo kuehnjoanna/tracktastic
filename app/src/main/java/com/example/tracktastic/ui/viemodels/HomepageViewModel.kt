@@ -3,12 +3,14 @@ package com.example.tracktastic.ui.viemodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.tracktastic.data.model.ClickerActivity
+import com.example.tracktastic.ui.DialogsAndToasts
 import com.example.tracktastic.utils.Timer
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class HomepageViewModel : ViewModel() {
     val timerLogic = Timer()
+    val dialogsToasts = DialogsAndToasts
 
     val selectedItem = MutableLiveData<ClickerActivity>()
 

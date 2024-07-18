@@ -102,8 +102,13 @@ dependencies {
     //Datastore
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     //progressbar
-
     implementation("com.mikhaellopez:circularprogressbar:3.1.0")
+    //alerts
+    implementation("com.github.tapadoo:alerter:7.2.4")
+    //glide
+    implementation("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
+    annotationProcessor("com.github.bumptech.glide:okhttp3-integration:4.12.0")
 
 
 }

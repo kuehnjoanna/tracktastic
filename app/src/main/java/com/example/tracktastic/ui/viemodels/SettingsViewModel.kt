@@ -12,6 +12,7 @@ import com.example.tracktastic.data.model.ClickerActivity
 import com.example.tracktastic.data.model.User
 import com.example.tracktastic.ui.DialogsAndToasts
 import com.example.tracktastic.utils.Calculations
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.DocumentReference
@@ -28,6 +29,11 @@ class SettingsViewModel : ViewModel() {
         MutableLiveData<FirebaseUser?>(FirebaseAuth.getInstance().currentUser)
     val currentUser: LiveData<FirebaseUser?>
         get() = _currentUser
+
+    private val _usEr =
+        MutableLiveData<User>()
+    val usEr: LiveData<User>
+        get() = _usEr
 
     //data that comes from retriveDataFromFirebase function
     private val _firebaseWallpaperUrl = MutableLiveData<String>()
@@ -59,9 +65,85 @@ class SettingsViewModel : ViewModel() {
 
     val selectedItem = MutableLiveData<ClickerActivity>()
 
+    fun updateEmail(currentEmail: String, password: String, newEmail: String) {
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user != null) {
+            user.let {
+                // Get auth credentials from the user for re-authentication
+                val credential = EmailAuthProvider.getCredential(currentEmail, password)
 
-    fun logout() {
+                // Prompt the user to re-provide their sign-in credentials
+                it.reauthenticate(credential)
+                    .addOnCompleteListener { reauthTask ->
+                        if (reauthTask.isSuccessful) {
+                            Log.d("Reauth", "User re-authenticated.")
+                            // Now we can proceed with updating the email
+                            user.verifyBeforeUpdateEmail(newEmail)
+                                .addOnCompleteListener { updateTask ->
+                                    if (updateTask.isSuccessful) {
+                                        Log.d("EmailUpdate", "User email address updated.")
+
+                                    } else {
+                                        Log.w(
+                                            "EmailUpdate",
+                                            "Failed to update email.",
+                                            updateTask.exception
+                                        )
+                                    }
+                                }
+
+                        } else {
+                            Log.w("Reauth", "Re-authentication failed.", reauthTask.exception)
+                        }
+                    }
+            } ?: run {
+                Log.w("EmailUpdate", "No authenticated user found.")
+            }
+        }
+    }
+
+
+    fun updatePassword(currentEmail: String, password: String, newPassword: String) {
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user != null) {
+            user.let {
+                // Get auth credentials from the user for re-authentication
+                val credential = EmailAuthProvider.getCredential(currentEmail, password)
+
+                // Prompt the user to re-provide their sign-in credentials
+                it.reauthenticate(credential)
+                    .addOnCompleteListener { reauthTask ->
+                        if (reauthTask.isSuccessful) {
+                            Log.d("Reauth", "User re-authenticated.")
+                            // Now we can proceed with updating the email
+                            user.updatePassword(newPassword)
+                                .addOnCompleteListener { updateTask ->
+                                    if (updateTask.isSuccessful) {
+                                        Log.d("PasswordUpdate", "User password updated.")
+
+                                    } else {
+                                        Log.w(
+                                            "PasswordUpdate",
+                                            "Failed to update password.",
+                                            updateTask.exception
+                                        )
+                                    }
+                                }
+
+                        } else {
+                            Log.w("Reauth", "Re-authentication failed.", reauthTask.exception)
+                        }
+                    }
+            } ?: run {
+                Log.w("EmailUpdate", "No authenticated user found.")
+            }
+        }
+    }
+
+    fun logout(func: () -> Unit) {
         FirebaseAuth.getInstance().signOut()
+        _currentUser.postValue(null)
+        func()
     }
 
     fun deleteAccoount(context: Context, messageSuccess: Int, messageFailure: Int) {
@@ -72,7 +154,7 @@ class SettingsViewModel : ViewModel() {
                 Log.d("account delete", it.message!!.toString())
 
                 DialogsAndToasts.showToast(messageFailure, context)
-                logout()
+
             }
 
     }
@@ -81,6 +163,10 @@ class SettingsViewModel : ViewModel() {
     fun selectedActivityItem(it: ClickerActivity) {
         selectedItem.value = it
 
+    }
+
+    fun updateUserName(name: String) {
+        firestoreReference.update("userName", name)
     }
 
     fun timesClicked(name: String, timesClicked: Int) {
@@ -212,7 +298,7 @@ class SettingsViewModel : ViewModel() {
                 _firebaseWallpaperUrl.value = user!!.wallpaperUrl
                 _firebaseAvatarUrl.value = user.avatarUrl
                 _firebaseName.value = user.userName
-
+                _usEr.postValue(user)
 
             } else {
                 Log.d(TAG, "Current data: null")

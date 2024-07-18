@@ -2,16 +2,16 @@ package com.example.tracktastic.utils
 
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.tracktastic.R
+import com.example.tracktastic.databinding.EditDialogBinding
 
 /*
 statisticks
@@ -27,6 +27,7 @@ how much time in a day diagram maybe together
 
  */
 class Timer {
+
     var isPomodoroOn = false
     var duration: Int = 0
 
@@ -44,15 +45,23 @@ class Timer {
     val progress: LiveData<Int>
         get() = _progress
     private val _selectedtime = MutableLiveData<Int>()
+
+    var _notification = MutableLiveData<String?>(null)
+    val notification: LiveData<String?>
+        get() = _notification
     val selectedtime: LiveData<Int>
         get() = _selectedtime
 
 
-    fun setTimeFunction(context: Context) {
+    fun setTimeFunction(context: Context, dialogBinding: EditDialogBinding) {
+        val binding = dialogBinding
         val timeDialog = Dialog(context)
-        timeDialog.setContentView(R.layout.add_dialog)
-        val timeSet = timeDialog.findViewById<EditText>(R.id.etGetTime)
-        timeDialog.findViewById<Button>(R.id.btnOk).setOnClickListener {
+        timeDialog.setContentView(binding.root)
+        timeDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        // timeDialog.setContentView(R.layout.edit_dialog)
+        // val timeSet = timeDialog.findViewById<EditText>(R.id.ETeditText)
+        val timeSet = binding.ETeditText
+        binding.btnConfirm.setOnClickListener {
             if (timeSet.text.isEmpty()) {
                 Toast.makeText(context, "Enter Time Duration", Toast.LENGTH_SHORT).show()
             } else {
@@ -70,6 +79,9 @@ class Timer {
                 // binding.pbTimer.max = timeSelected
                 _selectedtime.postValue(pomodoroTimeSelected)
             }
+            timeDialog.dismiss()
+        }
+        binding.btnCancel.setOnClickListener {
             timeDialog.dismiss()
         }
         timeDialog.show()
@@ -106,12 +118,14 @@ class Timer {
     fun startTimerSetup() {
         if (isPomodoroCountDownStart == false)
         //   binding.btnPlayPause.text = "Pause"
-            startPomodoroTimer(pauseOffSet)
+            startPomodoroTimer(pauseOffSet) {
+
+            }
 
 
     }
 
-    fun startPomodoroTimer(pauseOffSetL: Long) {
+    fun startPomodoroTimer(pauseOffSetL: Long, function: () -> Unit) {
         // Calculate the total time in seconds and progress
         val totalTimeInSeconds = pomodoroTimeSelected * 60
         val totalTimeInMillis = totalTimeInSeconds * 1000L - pauseOffSetL * 1000
@@ -141,8 +155,11 @@ class Timer {
             }
 
             override fun onFinish() {
+                //notification that is observed in main activity so the send notification would work
+                _notification.postValue("You just tracked $duration minutes, great job!")
 
                 resetPomodoroTime()
+
                 //   Toast.makeText(requireContext(), "Times Up!", Toast.LENGTH_SHORT).show()
             }
 

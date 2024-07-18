@@ -9,9 +9,10 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <VideoView
-        android:id="@+id/videoView"
+    <ImageView
+        android:id="@+id/img"
         android:layout_width="match_parent"
+        android:scaleType="fitXY"
         android:layout_height="match_parent" />
 
 </LinearLayout>

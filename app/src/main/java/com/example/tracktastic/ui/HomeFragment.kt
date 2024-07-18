@@ -16,7 +16,9 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import coil.load
+import com.example.tracktastic.R
 import com.example.tracktastic.data.model.ClickerActivity
+import com.example.tracktastic.databinding.EditDialogBinding
 import com.example.tracktastic.databinding.FragmentHomeBinding
 import com.example.tracktastic.ui.adapter.ActivityAdapter
 import com.example.tracktastic.ui.viemodels.HomepageViewModel
@@ -33,6 +35,7 @@ class HomeFragment : Fragment() {
     private val homepageViewModel: HomepageViewModel by activityViewModels()
     lateinit var adapter: ActivityAdapter
     private val settingsViewModel: SettingsViewModel by activityViewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,6 +114,7 @@ class HomeFragment : Fragment() {
                     homepageViewModel.timerLogic.stopTimer()
                     binding.pbTimer.indeterminateMode = false
 
+
                 } else {
                     homepageViewModel.timerLogic.startTimer()
                 }
@@ -119,6 +123,7 @@ class HomeFragment : Fragment() {
                     homepageViewModel.timerLogic.timePause()
                 } else {
                     homepageViewModel.timerLogic.startTimerSetup()
+
                 }
 
             }
@@ -159,14 +164,26 @@ class HomeFragment : Fragment() {
         val itemClickedCallback: (ClickerActivity) -> Unit = {
             homepageViewModel.selectedActivityItem(it)
             homepageViewModel.timerLogic.isPomodoroOn = true
-            homepageViewModel.timerLogic.setTimeFunction(requireContext())
+
+            homepageViewModel.timerLogic.setTimeFunction(
+                requireContext(),
+                EditDialogBinding.inflate(layoutInflater)
+            )
+
 
         }
+
         val itemClickedCallback2: (ClickerActivity) -> Unit = {
             homepageViewModel.selectedActivityItem(it)
             homepageViewModel.timerLogic.isPomodoroOn = false
             homepageViewModel.timerLogic.resetPomodoroTime()
             homepageViewModel.addDuration()
+            DialogsAndToasts.createInAppAlert(
+                requireActivity(),
+                R.string.app_name,
+                R.string.duration_updated
+            )
+
         }
 
 
@@ -233,7 +250,8 @@ class HomeFragment : Fragment() {
 
                             adapter.notifyItemRemoved(viewHolder.adapterPosition)  // Notify adapter about item removal
 
-                            Toast.makeText(requireContext(), "deleted", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), "deleted", Toast.LENGTH_SHORT)
+                                .show()
                         }
                         .setNegativeButton("No") { _, _ ->
 
@@ -246,110 +264,6 @@ class HomeFragment : Fragment() {
 
 
         }
+
     }
-    /*
-        ////pomodoro
-        //countdown
-        private var timeSelected: Int = 0
-        private var timeCountDown: CountDownTimer? = null
-        private var timeProgress = 0
-        private var pauseOffSet: Long = 0
-        private var isCountDownStart = true
-
-        private fun resetPomodoroTime() {
-            if (timeCountDown != null) {
-                timeCountDown!!.cancel()
-                timeProgress = 0
-                timeSelected = 0
-                pauseOffSet = 0
-                timeCountDown = null
-                //   binding.btnPlayPause.text = "Staert"
-                isCountDownStart = true
-                binding.pbTimer.progress = 0
-                binding.tvTimeLeft.text = "0"
-            }
-        }
-
-        private fun timePause() {
-            if (timeCountDown != null) {
-                timeCountDown!!.cancel()
-            }
-        }
-
-        private fun startTimerSetup() {
-            if (timeSelected > timeProgress) {
-                if (isCountDownStart) {
-                    //   binding.btnPlayPause.text = "Pause"
-                    startPomodoroTimer(pauseOffSet)
-                    isCountDownStart = false
-                } else {
-                    isCountDownStart = true
-                    // binding.btnPlayPause.text = "Resume"
-                    timePause()
-                }
-            } else {
-
-                Toast.makeText(requireContext(), "Enter Time", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        private fun startPomodoroTimer(pauseOffSetL: Long) {
-            // Calculate the total time in seconds and progress
-            val totalTimeInSeconds = timeSelected * 60
-            val totalTimeInMillis = totalTimeInSeconds * 1000L - pauseOffSetL * 1000
-
-            // Initialize progress
-            binding.pbTimer.max = totalTimeInSeconds
-            binding.pbTimer.progress = totalTimeInSeconds - pauseOffSetL.toInt()
-
-            timeCountDown = object : CountDownTimer(totalTimeInMillis, 1000) {
-                override fun onTick(p0: Long) {
-                    timeProgress++
-                    val remainingTimeInSeconds = totalTimeInSeconds - timeProgress
-                    val hours = remainingTimeInSeconds / 3600
-                    val minutes = (remainingTimeInSeconds % 3600) / 60
-                    val seconds = remainingTimeInSeconds % 60
-
-                    val time = String.format("%02d:%02d:%02d", hours, minutes, seconds)
-                    pauseOffSet = totalTimeInSeconds - p0 / 1000
-                    binding.pbTimer.progress = (totalTimeInSeconds - timeProgress).toInt()
-                    binding.tvTimeLeft.text = time
-                }
-
-                override fun onFinish() {
-                    homepageViewModel.timerLogic.isPomodoroOn = false
-                    resetPomodoroTime()
-                    Toast.makeText(requireContext(), "Times Up!", Toast.LENGTH_SHORT).show()
-                }
-
-            }.start()
-        }
-
-
-        private fun setTimeFunction() {
-            val timeDialog = Dialog(requireContext())
-            timeDialog.setContentView(R.layout.add_dialog)
-            val timeSet = timeDialog.findViewById<EditText>(R.id.etGetTime)
-            timeDialog.findViewById<Button>(R.id.btnOk).setOnClickListener {
-                if (timeSet.text.isEmpty()) {
-                    Toast.makeText(requireContext(), "Enter Time Duration", Toast.LENGTH_SHORT).show()
-                } else {
-                    homepageViewModel.timerLogic.resetPomodoroTime()
-                    val givenTime = timeSet.text.toString().toInt() * 60
-                    val hours = givenTime / 3600
-                    val minutes = (givenTime % 3600) / 60
-                    val seconds = givenTime % 60
-
-                    val time = String.format("%02d:%02d:%02d", hours, minutes, seconds)
-                    binding.tvTimeLeft.text = time
-                    //      binding.btnPlayPause.text = "Start"
-                    timeSelected = timeSet.text.toString().toInt()
-                    binding.pbTimer.max = timeSelected
-                }
-                timeDialog.dismiss()
-            }
-            timeDialog.show()
-        }
-
-     */
 }

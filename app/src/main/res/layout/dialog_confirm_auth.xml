@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/dialogBox"
+        android:backgroundTint="@color/grey"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/border_shape">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/authConfirmTitle"
+            android:gravity="center"
+            android:background="@drawable/shape_fill"
+            android:padding="10dp"
+            android:text="@string/confirm_it_is_you"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:drawablePadding="8dp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/confirmEmail"
+            android:textColor="@color/white"
+            android:hint="@string/email"
+            android:textColorHint="@color/white"
+            android:textSize="16sp"
+            android:layout_marginHorizontal="20sp"
+            android:backgroundTint="@color/lavender"
+            android:layout_marginBottom="30dp"
+            android:maxLines="1"
+            android:layout_marginVertical="10dp"
+            android:drawableStart="@drawable/baseline_email_24"
+            android:drawablePadding="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/authConfirmTitle" />
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/etNewValue"
+            android:textColorHint="@color/white"
+            android:hint="@string/new_email"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:layout_marginHorizontal="20sp"
+            android:backgroundTint="@color/lavender"
+            android:layout_marginBottom="30dp"
+            android:maxLines="1"
+            android:drawableStart="@drawable/baseline_fiber_new_24"
+            android:drawablePadding="8dp"
+            android:layout_marginVertical="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/confirmEmail" />
+
+        <EditText
+            android:layout_width="300dp"
+            android:textColorHint="@color/white"
+            android:layout_height="wrap_content"
+            android:id="@+id/etConfirmPassword"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:hint="@string/password"
+            android:layout_marginVertical="10dp"
+            android:layout_marginHorizontal="20sp"
+            android:backgroundTint="@color/lavender"
+            android:layout_marginBottom="30dp"
+            android:maxLines="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:drawableStart="@drawable/baseline_lock_24"
+            android:drawablePadding="8dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etNewValue" />
+
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:id="@+id/btnCancel"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:text="Cancel"
+            android:layout_marginBottom="8dp"
+            app:cornerRadius="20dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/etConfirmPassword"
+            app:layout_constraintBottom_toBottomOf="@id/dialogBox"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btnConfirm" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:id="@+id/btnConfirm"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="40dp"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="10dp"
+            android:text="Ok"
+            app:cornerRadius="20dp"
+            app:layout_constraintTop_toBottomOf="@id/etConfirmPassword"
+            app:layout_constraintBottom_toBottomOf="@id/dialogBox"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btnCancel" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
