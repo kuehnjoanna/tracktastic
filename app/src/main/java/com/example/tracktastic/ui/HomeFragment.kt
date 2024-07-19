@@ -185,6 +185,11 @@ class HomeFragment : Fragment() {
             )
 
         }
+        val itemClickedCallback3: (ClickerActivity) -> Unit = {
+            settingsViewModel.selectedActivityItem(it)
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToUpdateFragment())
+
+        }
 
 
         settingsViewModel.repository.clicketestlist.observe(viewLifecycleOwner) {
@@ -199,6 +204,7 @@ class HomeFragment : Fragment() {
                 settingsViewModel.repository.clicketestlist.value!!,
                 itemClickedCallback,
                 itemClickedCallback2,
+                itemClickedCallback3,
                 SettingsViewModel(),
                 HomepageViewModel(),
                 StatisticsViewModel()

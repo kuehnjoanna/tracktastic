@@ -69,6 +69,10 @@
             android:name="isHome"
             app:argType="boolean"
             android:defaultValue="false" />
+        <action
+            android:id="@+id/action_homeFragment_to_updateFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:destination="@id/updateFragment" />
     </fragment>
     <fragment
         android:id="@+id/forgotPasswordFragment"
@@ -103,6 +107,14 @@
             android:id="@+id/action_settingsFragment_to_loginFragment"
             app:enterAnim="@anim/slide_in_right"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_privacyPolicyFragment2"
+            app:enterAnim="@anim/slide_in_right"
+            app:destination="@id/privacyPolicyFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_termsAndConditionsFragment2"
+            app:enterAnim="@anim/slide_in_right"
+            app:destination="@id/termsAndConditionsFragment" />
     </fragment>
     <fragment
         android:id="@+id/statisticsFragment"
@@ -119,4 +131,19 @@
             app:enterAnim="@anim/slide_in_right"
             app:destination="@id/designFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/privacyPolicyFragment"
+        android:name="com.example.tracktastic.ui.PrivacyPolicyFragment"
+        android:label="fragment_privacy_policy"
+        tools:layout="@layout/fragment_privacy_policy" />
+    <fragment
+        android:id="@+id/termsAndConditionsFragment"
+        android:name="com.example.tracktastic.ui.TermsAndConditionsFragment"
+        android:label="fragment_terms_and_conditions"
+        tools:layout="@layout/fragment_terms_and_conditions" />
+    <fragment
+        android:id="@+id/updateFragment"
+        android:name="com.example.tracktastic.ui.UpdateFragment"
+        android:label="fragment_update"
+        tools:layout="@layout/fragment_update" />
 </navigation>

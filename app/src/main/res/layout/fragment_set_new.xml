@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:background="@drawable/testbg"
     android:orientation="vertical"
     tools:context=".ui.SetNewFragment">
 
@@ -11,111 +13,221 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:textColor="@color/white"
         android:text="Set New Activity"
         android:textSize="40dp" />
 
-    <EditText
-        android:id="@+id/ETactivityNameNew"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="name"
-        android:minWidth="200dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/LLtimerWidget"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="do you want to set reminders? no/yes how often" />
+            android:layout_marginHorizontal="23dp"
+            android:layout_marginVertical="15dp"
+            app:cardBackgroundColor="@color/grey"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintBottom_toTopOf="@id/recyclerView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llSignOutAndTitle"
+            app:strokeColor="@color/black"
+            app:strokeWidth="3dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="set amount of clicks per day, //one, more, unlmtd" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=" set a timer for tracking (set/disable) set: count up, count down, pomodoro: work/break" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="do you want to set a deadline ? if yes: days/months/specific time" />
+                <EditText
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/etNewActivityName"
+                    android:textColor="@color/lavender"
+                    android:textSize="16sp"
+                    android:hint="@string/name"
+                    android:textColorHint="@color/white"
+                    android:textAlignment="center"
+                    android:layout_margin="20sp"
+                    android:backgroundTint="@color/lavender"
+                    android:layout_marginBottom="30dp"
+                    android:maxLines="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/editTitle" />
+
+
+                <LinearLayout
+                    android:id="@+id/notificatimbkons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="5dp"
+                    android:backgroundTint="@color/yellow"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="190dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginVertical="5dp"
+                        android:gravity="center"
+                        android:text="increment"
+                        android:textColor="@color/white"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+
+                    <EditText
+                        android:id="@+id/etIncrement"
+                        android:layout_width="120dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="end"
+                        android:autofillHints="password"
+                        android:background="@drawable/border_shape"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@color/lavender"
+                        android:gravity="center"
+                        android:hint="increment"
+                        android:inputType="number"
+                        android:padding="8dp"
+                        android:textColor="@color/grey" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/notifications"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="190dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginVertical="5dp"
+                        android:gravity="center"
+                        android:text="decrement"
+                        android:textColor="@color/white"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+
+                    <EditText
+                        android:id="@+id/etDecrement"
+                        android:layout_width="120dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="end"
+                        android:autofillHints="password"
+                        android:background="@drawable/border_shape"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@color/lavender"
+                        android:gravity="center"
+                        android:hint="decrement"
+                        android:inputType="number"
+                        android:padding="8dp"
+                        android:textColor="@color/grey" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/notijbkfications"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="190dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginVertical="5dp"
+                        android:gravity="center"
+                        android:text="value"
+                        android:textColor="@color/white"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+
+                    <EditText
+                        android:id="@+id/etValue"
+                        android:layout_width="120dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="end"
+                        android:autofillHints="password"
+                        android:background="@drawable/border_shape"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@color/lavender"
+                        android:gravity="center"
+                        android:hint="value"
+                        android:inputType="number"
+                        android:padding="8dp"
+                        android:textColor="@color/grey" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/notificatkjkions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="190dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginVertical="5dp"
+                        android:gravity="center"
+                        android:text="reminders"
+                        android:textColor="@color/white"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/reminderSwitch"
+                        android:shadowColor="@color/white"
+                        android:backgroundTint="@color/white"
+                        android:background="@drawable/border_shape"
+                        android:layout_width="80dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="20dp"
+                        android:contentDescription="@string/notifications" />
+
+                </LinearLayout>
+
+
+                <Button
+                    android:id="@+id/BTNcreateNewActivity"
+                    android:layout_width="320dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="30dp"
+                    android:text="Create"
+                    android:textSize="18sp"
+                    app:cornerRadius="30dp" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/BTNpickTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="time"
-                android:textSize="20dp"
-                android:textStyle="italic" />
-
-            <TextView
-                android:id="@+id/tvTimeSelected"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="time"
-                android:textSize="40dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/BTNpickDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="date"
-                android:textSize="20dp"
-                android:textStyle="italic" />
-
-            <TextView
-                android:id="@+id/tvDateSelected"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="date"
-                android:textSize="40dp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <EditText
-        android:id="@+id/ETuserPasswordNew"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="password"
-        android:minWidth="200dp"
-        android:visibility="invisible" />
-
-    <Button
-        android:id="@+id/BTNcreateNewActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="create"
-        android:textSize="20dp"
-        android:textStyle="italic" />
 
 </LinearLayout>

@@ -147,15 +147,30 @@ class SettingsFragment : Fragment() {
             binding.notificationSwitch.setOnClickListener {
                 if (binding.notificationSwitch.isChecked) {
                     DialogsAndToasts.showToast(R.string.notification_off, requireContext())
+                    loginViewModel.notificationPermission(false)
                 } else if (!binding.notificationSwitch.isChecked) {
                     DialogsAndToasts.showToast(R.string.notification_on, requireContext())
+                    loginViewModel.notificationPermission(true)
                 }
             }
 
             //language
+            binding.language.setOnClickListener {
+                DialogsAndToasts.createInAppAlert(
+                    requireActivity(),
+                    R.string.language,
+                    R.string.available_languages
+                )
+            }
             //terms and conditions
-            //privacypolicy = sending something to download
+            binding.termsAndConditions.setOnClickListener {
 
+                findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToTermsAndConditionsFragment2())
+            }
+            //privacypolicy = sending something to download
+            binding.policy.setOnClickListener {
+                findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToPrivacyPolicyFragment2())
+            }
 
             //faq
             //chat

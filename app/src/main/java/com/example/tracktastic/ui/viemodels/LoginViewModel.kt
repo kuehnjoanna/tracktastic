@@ -29,6 +29,10 @@ class LoginViewModel : ViewModel() {
     var userDataDocumentReference: DocumentReference? = null
 
 
+    private val _permission = MutableLiveData<Boolean>()
+    val notificationPermission: LiveData<Boolean>
+        get() = _permission
+
     // everything repository
     val repository = Repository
 
@@ -43,6 +47,15 @@ class LoginViewModel : ViewModel() {
     fun addNotificationtext(text: String) {
 
         //   _notification.postValue(text)
+    }
+
+    fun notificationPermission(boolean: Boolean) {
+        if (boolean == true) {
+            _permission.postValue(true)
+        } else {
+            _permission.postValue(false)
+        }
+
     }
 
     fun setProfile(profile: User) {

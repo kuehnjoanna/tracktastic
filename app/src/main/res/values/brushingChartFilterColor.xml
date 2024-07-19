@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="BrushingChartFilterColor">
+        <item>@color/lavender</item>
+        <item>@color/yellow</item>
+        <item>@color/alert_default_error_background</item>
+        <!-- Add more colors as needed -->
+    </array>
+</resources>

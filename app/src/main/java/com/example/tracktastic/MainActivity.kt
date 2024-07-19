@@ -48,9 +48,12 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         createNotificationChannel()
         checkNotificationPermission()
+
+
 
 
 
@@ -148,6 +151,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        viewModel.notificationPermission.observe(this) {
+            if (it != true) {
+                cancelNotification()
+            }
+        }
 
     }
 
@@ -216,9 +224,15 @@ class MainActivity : AppCompatActivity() {
 
 
         with(NotificationManagerCompat.from(this)) {
-
+            checkNotificationPermission()
             notify(notificationId, builder.build())
         }
+    }
+
+    private fun cancelNotification() {
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.cancel(notificationId)
     }
 
 

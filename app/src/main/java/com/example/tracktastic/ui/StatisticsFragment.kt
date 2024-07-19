@@ -72,6 +72,8 @@ class StatisticsFragment : Fragment() {
         binding.anotherchart.description = Description().apply { text = "Sample Line Chart" }
         binding.anotherchart.animateY(1000)
 
+
     }
+    /** Setup data for horizontal chart */
 
 }

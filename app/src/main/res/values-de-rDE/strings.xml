@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tracktastic</string>
+    <string name="hello">Hallo</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Passwort</string>
+    <string name="sign_up">Registrieren</string>
+    <string name="login">Anmelden</string>
+    <string name="already_an_user_login">Bereits Benutzer? Anmelden</string>
+    <string name="time_left">erbleibende Zeit</string>
+    <string name="nice_to_have_you_back">schön, dich wiederzuhaben.</string>
+    <string name="forgot_password">Passwort vergessen?</string>
+    <string name="not_registered_yet">Noch nicht registriert? Registrieren</string>
+    <string name="account">Konto</string>
+    <string name="wallpaper">Hintergrund</string>
+    <string name="notifications">Benachrichtigungen</string>
+    <string name="language">Sprache</string>
+    <string name="terms_conditions">Geschäftsbedingungen</string>
+    <string name="privacy">Datenschutzrichtlinie</string>
+    <string name="help">Hilfe</string>
+    <string name="issues">Probleme</string>
+    <string name="available_languages">Sie können die Spracheinstellungen auf Ihrem Telefon ändern zu: Englisch, Deutsch, Polnisch</string>
+    <string name="report_problem">Problem melden</string>
+    <string name="delete_account">Konto löschen</string>
+    <string name="logout">Abmelden</string>
+    <string name="dialog_message">Dialognachricht</string>
+    <string name="dialog_account_delete">Sind Sie sicher, dass Sie Ihr Konto löschen möchten?</string>
+    <string name="toast_account_deleted">Konto gelöscht</string>
+    <string name="toast_something_went_wrong">Etwas ist schief gelaufen, bitte erneut anmelden</string>
+    <string name="are_you_sure">Bist du sicher?</string>
+    <string name="confirm">Bestätigen</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="set_time">Zeit einstellen</string>
+    <string name="field_cant_be_empty">Feld darf nicht leer sein</string>
+    <string name="update_your_name">Aktualisieren Sie Ihren Namen</string>
+    <string name="sucessfully_updated">rfolgreich aktualisiert</string>
+    <string name="update_your_email">Aktualisieren Sie Ihre E-Mail</string>
+    <string name="confirm_it_is_you">Bestätigen Sie, dass Sie es sind</string>
+    <string name="new_email">Neue E-Mail</string>
+    <string name="new_password">Neue Passwort</string>
+    <string name="old_password">Altes Passwort</string>
+    <string name="are_you_sure_you_want_to_log_out">Sind Sie sicher, dass Sie sich abmelden möchten?</string>
+    <string name="notification_on">enachrichtigungen: Ein</string>
+    <string name="notification_off">enachrichtigungen: Aus</string>
+    <string name="duration_updated">Dauer aktualisiert</string>
+</resources>

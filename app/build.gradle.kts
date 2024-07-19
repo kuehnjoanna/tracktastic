@@ -98,6 +98,7 @@ dependencies {
     //charts
     // Charts
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation("com.github.STRAIBERRY-AI-INC:Straiberry-charts:1.1.0")
 
     //Datastore
     implementation("androidx.datastore:datastore-preferences:1.0.0")

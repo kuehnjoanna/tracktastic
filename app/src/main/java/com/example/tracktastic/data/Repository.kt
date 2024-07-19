@@ -31,9 +31,19 @@ object Repository {
 
 
     //Api response result from get default wallpaper
-    private var _response = MutableLiveData<List<Hit>>()
-    val response: LiveData<List<Hit>>
-        get() = _response
+    private var _wallpaper1 = MutableLiveData<List<Hit>>()
+    val wallpaper1: LiveData<List<Hit>>
+        get() = _wallpaper1
+
+    //Api response result from get default wallpaper
+    private var _wallpaper2 = MutableLiveData<List<Hit>>()
+    val wallpaper2: LiveData<List<Hit>>
+        get() = _wallpaper2
+
+    //Api response result from get default wallpaper
+    private var _wallpaper3 = MutableLiveData<List<Hit>>()
+    val wallpaper3: LiveData<List<Hit>>
+        get() = _wallpaper3
 
     //wallpaper URI
     private var _uri = MutableLiveData<String>()
@@ -91,6 +101,7 @@ object Repository {
             val response = WallpaperApi.apiService.getDefaultWallpaper()
             Log.d("ApiResponseAll", response.toString())
             _isWorking.postValue(true)
+            _wallpaper3.postValue(response.hits)
             // _response.postValue(response.hits)
 
             //url that is used for downloading and uploading the picture into Firebase with upload function
@@ -113,16 +124,26 @@ object Repository {
         // return wallpaperURL
     }
 
-    suspend fun loadFeatherWallpaper() {
+    suspend fun loadOtherWallpapers() {
         try {
             //getting WALLPAPER
-            val response = WallpaperApi.apiService.getFeatherWallpaper()
-            Log.d("ApifeatherResponseAll", response.toString())
+            val response1 = WallpaperApi.apiService.getWaterWallpaper()
+            Log.d("ApiWaterResponseAll", response1.toString())
             _isWorking.postValue(true)
-            _response.postValue(response.hits)
+            _wallpaper1.postValue(response1.hits)
 
+            val response2 = WallpaperApi.apiService.getPlantWallpaper()
+            Log.d("ApiWaterResponseAll", response2.toString())
+            _isWorking.postValue(true)
+            _wallpaper2.postValue(response2.hits)
+
+
+            val response = WallpaperApi.apiService.getDefaultWallpaper()
+            Log.d("ApiResponseAll", response.toString())
+            _isWorking.postValue(true)
+            _wallpaper3.postValue(response.hits)
             //url that is used for downloading and uploading the picture into Firebase with upload function
-            val wallpaperURL = response.hits[0].largeImageURL.toString()
+            val wallpaperURL = response2.hits[0].largeImageURL.toString()
 
             Log.d("ApiFeatherResponseURL", wallpaperURL)
             //uploading wallpaper

@@ -23,6 +23,7 @@ class ActivityAdapter(
     val dataset: List<ClickerActivity>,
     val itemClickedCallback: (ClickerActivity) -> Unit,
     val itemClickedCallback2: (ClickerActivity) -> Unit,
+    val itemClickedCallback3: (ClickerActivity) -> Unit,
     val viewModel: SettingsViewModel,
     val homeViewModel: HomepageViewModel,
     val statisticsViewModel: StatisticsViewModel
@@ -133,6 +134,9 @@ class ActivityAdapter(
         }
         holder.binding.btnStopTimer.setOnClickListener {
             itemClickedCallback2(data)
+        }
+        holder.binding.btnItemSettings.setOnClickListener {
+            itemClickedCallback3(data)
         }
 
         /*

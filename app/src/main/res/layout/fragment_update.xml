@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/testbg"
+    android:layout_height="match_parent"
+    tools:context=".ui.UpdateFragment">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:text="Activity Details"
+        android:textSize="40dp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/LLtimerWidget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="23dp"
+            android:layout_marginVertical="15dp"
+            app:cardBackgroundColor="@color/grey"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintBottom_toTopOf="@id/recyclerView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/llSignOutAndTitle"
+            app:strokeColor="@color/black"
+            app:strokeWidth="3dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <EditText
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/etNewActivityName"
+                    android:textColor="@color/lavender"
+                    android:textSize="16sp"
+                    android:hint="@string/name"
+                    android:textColorHint="@color/white"
+                    android:textAlignment="center"
+                    android:layout_margin="20sp"
+                    android:backgroundTint="@color/lavender"
+                    android:layout_marginBottom="30dp"
+                    android:maxLines="1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/editTitle" />
+
+
+                <LinearLayout
+                    android:id="@+id/notificatimbkons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="5dp"
+                    android:backgroundTint="@color/yellow"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="190dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginVertical="5dp"
+                        android:gravity="center"
+                        android:text="increment"
+                        android:textColor="@color/white"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+
+                    <EditText
+                        android:id="@+id/etIncrement"
+                        android:layout_width="120dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="end"
+                        android:autofillHints="password"
+                        android:background="@drawable/border_shape"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@color/lavender"
+                        android:gravity="center"
+                        android:hint="increment"
+                        android:inputType="number"
+                        android:padding="8dp"
+                        android:textColor="@color/grey" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/notifications"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="190dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginVertical="5dp"
+                        android:gravity="center"
+                        android:text="decrement"
+                        android:textColor="@color/white"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+
+                    <EditText
+                        android:id="@+id/etDecrement"
+                        android:layout_width="120dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="end"
+                        android:autofillHints="password"
+                        android:background="@drawable/border_shape"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@color/lavender"
+                        android:gravity="center"
+                        android:hint="decrement"
+                        android:inputType="number"
+                        android:padding="8dp"
+                        android:textColor="@color/grey" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/notijbkfications"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="190dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginVertical="5dp"
+                        android:gravity="center"
+                        android:text="value"
+                        android:textColor="@color/white"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+
+                    <EditText
+                        android:id="@+id/etValue"
+                        android:layout_width="120dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="end"
+                        android:autofillHints="password"
+                        android:background="@drawable/border_shape"
+                        android:drawablePadding="8dp"
+                        android:drawableTint="@color/lavender"
+                        android:gravity="center"
+                        android:hint="value"
+                        android:inputType="number"
+                        android:padding="8dp"
+                        android:textColor="@color/grey" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/notificatkjkions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="190dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginVertical="5dp"
+                        android:gravity="center"
+                        android:text="reminders"
+                        android:textColor="@color/white"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/reminderSwitch"
+                        android:shadowColor="@color/white"
+                        android:backgroundTint="@color/white"
+                        android:background="@drawable/border_shape"
+                        android:layout_width="80dp"
+                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="20dp"
+                        android:contentDescription="@string/notifications" />
+
+                </LinearLayout>
+
+
+                <Button
+                    android:id="@+id/BTNcreateNewActivity"
+                    android:layout_width="320dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="30dp"
+                    android:text="Update"
+                    android:textSize="18sp"
+                    app:cornerRadius="30dp" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+    </LinearLayout>
+
+</LinearLayout>

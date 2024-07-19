@@ -26,8 +26,11 @@ interface WallpaperApiService {
     @GET("?key=44482891-25a4348e5d04e7daf44644db6&id=967967")
     suspend fun getDefaultWallpaper(): WallpaperResponse
 
-    @GET("?key=44482891-25a4348e5d04e7daf44644db6&id=6959585")
-    suspend fun getFeatherWallpaper(): WallpaperResponse
+    @GET("?key=44482891-25a4348e5d04e7daf44644db6&id=8727795")
+    suspend fun getWaterWallpaper(): WallpaperResponse
+
+    @GET("?key=44482891-25a4348e5d04e7daf44644db6&id=8653526")
+    suspend fun getPlantWallpaper(): WallpaperResponse
 
 }
 

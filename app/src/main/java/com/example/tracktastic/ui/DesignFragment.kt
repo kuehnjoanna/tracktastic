@@ -64,14 +64,66 @@ class DesignFragment : Fragment() {
         registeractivityforresult()
         viewModel.loadFeatherWallpaper()
 
-        viewModel.repository.response.observe(viewLifecycleOwner) {
-            binding.ivNewWallpaper.load(viewModel.repository.response.value!![0].largeImageURL)
+        viewModel.repository.wallpaper1.observe(viewLifecycleOwner) {
+            binding.ivNewWallpaper1.load(viewModel.repository.wallpaper1.value!![0].largeImageURL)
+        }
+        viewModel.repository.wallpaper2.observe(viewLifecycleOwner) {
+            binding.ivNewWallpaper2.load(viewModel.repository.wallpaper2.value!![0].largeImageURL)
+        }
+        viewModel.repository.wallpaper3.observe(viewLifecycleOwner) {
+            binding.ivNewWallpaper4.load(viewModel.repository.wallpaper3.value!![0].largeImageURL)
         }
 
-        binding.ivNewWallpaper.setOnClickListener {
+        binding.ivNewWallpaper1.setOnClickListener {
             lifecycleScope.launch {
                 viewModel.repository.upload(
-                    viewModel.repository.response.value!![0].largeImageURL.toString(),
+                    viewModel.repository.wallpaper1.value!![0].largeImageURL.toString(),
+                    "wallpaperUrl"
+                ) {
+                    if (it != null) {
+                        Log.d(
+                            "upload feather function",
+                            "success, "
+                        )
+                    } else {
+                        Log.d("upload feather function", "fail, ")
+                    }
+
+                }
+            }
+
+        }
+        viewModel.repository.wallpaper2.observe(viewLifecycleOwner) {
+            binding.ivNewWallpaper1.load(viewModel.repository.wallpaper1.value!![0].largeImageURL)
+        }
+
+        binding.ivNewWallpaper2.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.repository.upload(
+                    viewModel.repository.wallpaper2.value!![0].largeImageURL.toString(),
+                    "wallpaperUrl"
+                ) {
+                    if (it != null) {
+                        Log.d(
+                            "upload feather function",
+                            "success, "
+                        )
+                    } else {
+                        Log.d("upload feather function", "fail, ")
+                    }
+
+                }
+            }
+
+        }
+        viewModel.repository.wallpaper3.observe(viewLifecycleOwner) {
+            binding.ivNewWallpaper1.load(viewModel.repository.wallpaper1.value!![0].largeImageURL)
+        }
+
+        binding.ivNewWallpaper4.setOnClickListener {
+            lifecycleScope.launch {
+                viewModel.repository.upload(
+                    viewModel.repository.wallpaper3.value!![0].largeImageURL.toString(),
                     "wallpaperUrl"
                 ) {
                     if (it != null) {
@@ -108,7 +160,7 @@ class DesignFragment : Fragment() {
                         //  Picasso.get().load(imageURI)
 
                         imageURI.let {
-                            Picasso.get().load(it).into(binding.ivOwnWallpaper)
+                            Picasso.get().load(it).into(binding.ivNewWallpaper5)
                         }
                     }
 

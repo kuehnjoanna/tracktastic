@@ -13,5 +13,6 @@ data class ClickerActivity(
     var lastClickedAt: String = createdAt,
     var fontColor: Int = -1,
     var timeSpent: Int = 0,
-    var backgroundColor: Int = -2013265920
+    var backgroundColor: Int = -2013265920,
+    var reminders: Boolean = true
 )

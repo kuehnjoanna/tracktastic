@@ -174,12 +174,6 @@ class SettingsViewModel : ViewModel() {
             .update("timesClicked", timesClicked)
     }
 
-    fun updateClickerName(clicker: ClickerActivity, newName: String) {
-        firestoreReference.collection("activities").document(clicker.id.toString())
-            .update(clicker.name, newName)
-
-    }
-
     fun lastClicked(id: Int) {
 
         firestoreReference.collection("activities").document(id.toString())
@@ -222,15 +216,19 @@ class SettingsViewModel : ViewModel() {
     }
 
 
-    fun addNewClicker(size: Int, name: String) {
+    fun addNewClicker(name: String, size: Int, increment: Int, decrement: Int, value: Int) {
         val clicker = ClickerActivity(size, name)
+        clicker.increment = increment
+        clicker.decrement = decrement
+        clicker.value = value
         firestoreReference.collection("activities").document(clicker.id.toString()).set(clicker)
 
     }
 
-    fun removeClicker(name: String) {
-        firestoreReference.collection("activities").document(name).delete()
-        Log.d("delete", "userId: ${repository.clicketestlist.value}")
+    fun updateClicker(field: String, value: Any) {
+        firestoreReference.collection("activities").document(selectedItem.value!!.id.toString())
+            .update(field, value)
+        Log.d("update", "val $field, $value")
     }
 
 
@@ -274,7 +272,7 @@ class SettingsViewModel : ViewModel() {
     fun loadFeatherWallpaper() {
         viewModelScope.launch {
 
-            Repository.loadFeatherWallpaper()
+            Repository.loadOtherWallpapers()
 
 
         }
@@ -298,7 +296,7 @@ class SettingsViewModel : ViewModel() {
                 _firebaseWallpaperUrl.value = user!!.wallpaperUrl
                 _firebaseAvatarUrl.value = user.avatarUrl
                 _firebaseName.value = user.userName
-                _usEr.postValue(user)
+                _usEr.postValue(user!!)
 
             } else {
                 Log.d(TAG, "Current data: null")
