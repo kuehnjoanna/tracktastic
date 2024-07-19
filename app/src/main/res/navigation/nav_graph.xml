@@ -127,9 +127,9 @@
         android:label="fragment_design"
         tools:layout="@layout/fragment_design">
         <action
-            android:id="@+id/action_designFragment_self"
+            android:id="@+id/action_designFragment_to_settingsFragment"
             app:enterAnim="@anim/slide_in_right"
-            app:destination="@id/designFragment" />
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/privacyPolicyFragment"
@@ -145,5 +145,10 @@
         android:id="@+id/updateFragment"
         android:name="com.example.tracktastic.ui.UpdateFragment"
         android:label="fragment_update"
-        tools:layout="@layout/fragment_update" />
+        tools:layout="@layout/fragment_update">
+        <action
+            android:id="@+id/action_updateFragment_to_homeFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>

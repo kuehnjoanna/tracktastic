@@ -9,142 +9,163 @@
     tools:context=".ui.DesignFragment">
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:gravity="center"
-        android:layout_marginVertical="20dp"
-        android:text="@string/wallpaper"
-        android:textColor="@color/white"
-        android:textSize="30sp" />
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/homelayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="170dp"
-                android:layout_height="240dp"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="20dp"
-                app:cardBackgroundColor="@color/grey"
-                app:cardCornerRadius="20dp"
-                app:strokeColor="@color/black"
-                app:strokeWidth="3dp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@color/black"
-                    android:scaleType="fitXY"
-                    android:layout_gravity="center|start"
-                    android:id="@+id/ivNewWallpaper1" />
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="170dp"
-                android:layout_height="240dp"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="20dp"
-                app:cardBackgroundColor="@color/grey"
-                app:cardCornerRadius="20dp"
-                app:strokeColor="@color/black"
-                app:strokeWidth="3dp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@color/black"
-                    android:scaleType="fitXY"
-                    android:layout_gravity="center|start"
-                    android:id="@+id/ivNewWallpaper2" />
-
-            </com.google.android.material.card.MaterialCardView>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="170dp"
-                android:layout_height="240dp"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="20dp"
-                app:cardBackgroundColor="@color/grey"
-                app:cardCornerRadius="20dp"
-                app:strokeColor="@color/black"
-                app:strokeWidth="3dp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@color/black"
-                    android:scaleType="fitXY"
-                    android:layout_gravity="center|start"
-                    android:id="@+id/ivNewWallpaper4" />
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="170dp"
-                android:layout_height="240dp"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginVertical="20dp"
-                app:cardBackgroundColor="@color/grey"
-                app:cardCornerRadius="20dp"
-                app:strokeColor="@color/black"
-                app:strokeWidth="3dp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/your_wallpaper"
-                    android:layout_gravity="center|start"
-                    android:id="@+id/ivNewWallpaper5" />
-
-            </com.google.android.material.card.MaterialCardView>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <Button
-                android:layout_width="100dp"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="upload"
-                android:layout_marginHorizontal="40dp"
-                android:id="@+id/btnLoadOwnPicture"
-                android:layout_gravity="center" />
+                android:layout_gravity="start"
+                android:gravity="center"
+                android:layout_marginVertical="20dp"
+                android:text="@string/wallpaper"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
 
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="40dp"
-                android:text="save"
-                android:id="@+id/btnSaveChanges"
-                android:layout_gravity="center" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="170dp"
+                        android:layout_height="240dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginVertical="20dp"
+                        app:cardBackgroundColor="@color/grey"
+                        app:cardCornerRadius="20dp"
+                        app:strokeColor="@color/black"
+                        app:strokeWidth="3dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@color/black"
+                            android:scaleType="fitXY"
+                            android:layout_gravity="center|start"
+                            android:id="@+id/ivNewWallpaper1" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="170dp"
+                        android:layout_height="240dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginVertical="20dp"
+                        app:cardBackgroundColor="@color/grey"
+                        app:cardCornerRadius="20dp"
+                        app:strokeColor="@color/black"
+                        app:strokeWidth="3dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@color/black"
+                            android:scaleType="fitXY"
+                            android:layout_gravity="center|start"
+                            android:id="@+id/ivNewWallpaper2" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="170dp"
+                        android:layout_height="240dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginVertical="20dp"
+                        app:cardBackgroundColor="@color/grey"
+                        app:cardCornerRadius="20dp"
+                        app:strokeColor="@color/black"
+                        app:strokeWidth="3dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@color/black"
+                            android:scaleType="fitXY"
+                            android:layout_gravity="center|start"
+                            android:id="@+id/ivNewWallpaper4" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="170dp"
+                        android:layout_height="240dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginVertical="20dp"
+                        app:cardBackgroundColor="@color/grey"
+                        app:cardCornerRadius="20dp"
+                        app:strokeColor="@color/black"
+                        app:strokeWidth="3dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/your_wallpaper"
+                            android:layout_gravity="center|start"
+                            android:id="@+id/ivNewWallpaper5" />
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="upload"
+                        android:layout_marginHorizontal="40dp"
+                        android:id="@+id/btnLoadOwnPicture"
+                        android:layout_gravity="center" />
+
+                    <Button
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="40dp"
+                        android:text="save"
+                        android:id="@+id/btnSaveChanges"
+                        android:layout_gravity="center" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </LinearLayout>

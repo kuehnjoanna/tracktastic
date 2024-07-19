@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import coil.load
 import com.example.tracktastic.R
 import com.example.tracktastic.databinding.FragmentSetNewBinding
 import com.example.tracktastic.ui.viemodels.LoginViewModel
@@ -37,7 +38,9 @@ class SetNewFragment : Fragment(R.layout.fragment_set_new) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        SettingViewModel.usEr.observe(viewLifecycleOwner) {
+            binding.homelayout.load(it.wallpaperUrl)
+        }
 
 
         binding.BTNcreateNewActivity.setOnClickListener {

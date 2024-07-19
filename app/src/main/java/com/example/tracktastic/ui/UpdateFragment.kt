@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import coil.load
 import com.example.tracktastic.databinding.FragmentUpdateBinding
 import com.example.tracktastic.ui.viemodels.SettingsViewModel
 
@@ -31,7 +32,9 @@ class UpdateFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        SettingViewModel.usEr.observe(viewLifecycleOwner) {
+            binding.homelayout.load(it.wallpaperUrl)
+        }
 
 
         SettingViewModel.selectedItem.observe(viewLifecycleOwner) {
@@ -46,7 +49,7 @@ class UpdateFragment : Fragment() {
             }
             binding.BTNcreateNewActivity.setOnClickListener {
                 val size = SettingViewModel.repository.clicketestlist.value!!.size + 1
-                var name = binding.etNewActivityName.text.toString()
+
                 var increment = 1//binding.etIncrement.text.toString().toInt()
                 if (!binding.etIncrement.text.isNullOrEmpty()) {
                     increment = binding.etIncrement.text.toString().toInt()
@@ -66,11 +69,12 @@ class UpdateFragment : Fragment() {
                     SettingViewModel.updateClicker("value", value)
                 }
                 Log.d("what?", "$increment $decrement $value")
-                if (!name.isNullOrEmpty()) {
-
+                var name = SettingViewModel.selectedItem.value!!.name
+                if (!binding.etNewActivityName.text.isNullOrEmpty()) {
+                    name = binding.etNewActivityName.text.toString()
                     SettingViewModel.updateClicker("name", name)
                 }
-                findNavController().navigate(SetNewFragmentDirections.actionSetNewFragmentToHomeFragment())
+                findNavController().navigate(UpdateFragmentDirections.actionUpdateFragmentToHomeFragment())
                 // SettingViewModel.selectedItem.value = null
 
 

@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import coil.load
 import com.example.tracktastic.databinding.FragmentDesignBinding
 import com.example.tracktastic.ui.viemodels.SettingsViewModel
@@ -62,7 +63,10 @@ class DesignFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         registeractivityforresult()
-        viewModel.loadFeatherWallpaper()
+        viewModel.loadOtherWallpaper()
+        viewModel.usEr.observe(viewLifecycleOwner) {
+            binding.homelayout.load(it.wallpaperUrl)
+        }
 
         viewModel.repository.wallpaper1.observe(viewLifecycleOwner) {
             binding.ivNewWallpaper1.load(viewModel.repository.wallpaper1.value!![0].largeImageURL)
@@ -82,11 +86,11 @@ class DesignFragment : Fragment() {
                 ) {
                     if (it != null) {
                         Log.d(
-                            "upload feather function",
+                            "upload water function",
                             "success, "
                         )
                     } else {
-                        Log.d("upload feather function", "fail, ")
+                        Log.d("upload water function", "fail, ")
                     }
 
                 }
@@ -105,11 +109,11 @@ class DesignFragment : Fragment() {
                 ) {
                     if (it != null) {
                         Log.d(
-                            "upload feather function",
+                            "upload plant function",
                             "success, "
                         )
                     } else {
-                        Log.d("upload feather function", "fail, ")
+                        Log.d("upload plant function", "fail, ")
                     }
 
                 }
@@ -128,11 +132,11 @@ class DesignFragment : Fragment() {
                 ) {
                     if (it != null) {
                         Log.d(
-                            "upload feather function",
+                            "upload sky function",
                             "success, "
                         )
                     } else {
-                        Log.d("upload feather function", "fail, ")
+                        Log.d("upload sky function", "fail, ")
                     }
 
                 }
@@ -141,9 +145,12 @@ class DesignFragment : Fragment() {
         }
         binding.btnLoadOwnPicture.setOnClickListener {
             chooseImage()
+            upload()
         }
         binding.btnSaveChanges.setOnClickListener {
-            upload()
+            // upload()
+            findNavController().navigate(DesignFragmentDirections.actionDesignFragmentToSettingsFragment())
+
         }
     }
 

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import coil.load
 import com.example.tracktastic.databinding.FragmentStatisticsBinding
 import com.example.tracktastic.ui.viemodels.SettingsViewModel
 import com.github.mikephil.charting.components.Description
@@ -38,6 +39,9 @@ class StatisticsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        SettingsViewModel.usEr.observe(viewLifecycleOwner) {
+            binding.homelayout.load(it.wallpaperUrl)
+        }
         var list = mutableListOf<Pair<String, Float>>()
         var list2 = mutableListOf<Pair<String, Float>>()
         val entries = ArrayList<Entry>()

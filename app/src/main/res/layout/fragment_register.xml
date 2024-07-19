@@ -25,14 +25,14 @@
             android:hint="@string/name"
             android:inputType="text"
             android:drawableStart="@drawable/baseline_password_24"
-            android:drawableTint="@color/lavender"
+            android:drawableTint="@color/design_default_color_primary"
             android:drawablePadding="8dp"
             android:textColor="@color/grey" />
 
         <EditText
             android:layout_width="350dp"
             android:layout_height="60dp"
-            android:drawableTint="@color/lavender"
+            android:drawableTint="@color/design_default_color_primary"
             android:id="@+id/ETuserEmailNew"
             android:layout_marginTop="20dp"
             android:inputType="textEmailAddress"
@@ -48,7 +48,7 @@
             android:layout_width="350dp"
             android:layout_height="60dp"
             android:autofillHints="password"
-            android:drawableTint="@color/lavender"
+            android:drawableTint="@color/design_default_color_primary"
             android:id="@+id/ETuserPasswordNew"
             android:layout_marginTop="20dp"
             android:background="@drawable/border_shape"

@@ -68,7 +68,7 @@ class HomeFragment : Fragment() {
         settingsViewModel.retrieveListFromFirestore()
         binding.text.text = "hello,"
         settingsViewModel.firebaseWallpaperUrl.observe(viewLifecycleOwner) {
-            //    binding.homelayout.load(settingsViewModel.firebaseWallpaperUrl.value)
+            binding.homelayout.load(settingsViewModel.firebaseWallpaperUrl.value)
             Log.d("firebasewallpa", settingsViewModel.firebaseWallpaperUrl.value!!)
 
 

@@ -51,7 +51,9 @@ class SettingsFragment : Fragment() {
         //viewModel.loadWallpaper()
         settingsViewModel.retrieveDataFromDatabase()
 
-
+        settingsViewModel.usEr.observe(viewLifecycleOwner) {
+            binding.ivWallpaper.load(it.wallpaperUrl)
+        }
         //settings
         settingsViewModel.usEr.observe(viewLifecycleOwner) {
 

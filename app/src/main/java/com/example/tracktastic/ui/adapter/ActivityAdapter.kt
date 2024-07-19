@@ -86,8 +86,10 @@ class ActivityAdapter(
 
         holder.binding.btnClickerMinus.setOnClickListener {
             if (data.timesClicked != 0) {
+                // val hm = data.timesClicked - data.decrement
                 data.timesClicked--
                 viewModel.timesClicked(data.id.toString(), data.timesClicked)
+                viewModel.minusClicked(data)
                 viewModel.lastClicked(data.id)
                 holder.binding.tvClickerCount.text = data.timesClicked.toString()
                 //animation
@@ -100,6 +102,8 @@ class ActivityAdapter(
             //vibration
             VibrationUtil.Vibration(context)
         }
+
+
         holder.binding.llClickerName.setOnClickListener {
             if (holder.binding.cldetailSettings.visibility == View.VISIBLE) {
                 holder.binding.cldetailSettings.visibility = View.GONE

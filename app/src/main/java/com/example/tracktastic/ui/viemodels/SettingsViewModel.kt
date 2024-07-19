@@ -269,7 +269,7 @@ class SettingsViewModel : ViewModel() {
         }
     }
 
-    fun loadFeatherWallpaper() {
+    fun loadOtherWallpaper() {
         viewModelScope.launch {
 
             Repository.loadOtherWallpapers()
