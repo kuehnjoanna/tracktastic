@@ -20,10 +20,12 @@
     <string name="privacy">Datenschutzrichtlinie</string>
     <string name="help">Hilfe</string>
     <string name="issues">Probleme</string>
+    <string name="statistics">Statistik</string>
     <string name="available_languages">Sie können die Spracheinstellungen auf Ihrem Telefon ändern zu: Englisch, Deutsch, Polnisch</string>
     <string name="report_problem">Problem melden</string>
     <string name="delete_account">Konto löschen</string>
     <string name="logout">Abmelden</string>
+    <string name="give_new_name">Gib deine neue Name</string>
     <string name="dialog_message">Dialognachricht</string>
     <string name="dialog_account_delete">Sind Sie sicher, dass Sie Ihr Konto löschen möchten?</string>
     <string name="toast_account_deleted">Konto gelöscht</string>

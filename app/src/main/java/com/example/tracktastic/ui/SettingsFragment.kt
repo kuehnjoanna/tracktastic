@@ -61,7 +61,7 @@ class SettingsFragment : Fragment() {
             binding.name.setOnClickListener {
                 DialogsAndToasts.addEditDialog(
                     requireContext(),
-                    R.string.sucessfully_updated,
+                    R.string.give_new_name,
                     EditDialogBinding.inflate(layoutInflater)
                 ) {
                     settingsViewModel.updateUserName(DialogsAndToasts.editText.value.toString())

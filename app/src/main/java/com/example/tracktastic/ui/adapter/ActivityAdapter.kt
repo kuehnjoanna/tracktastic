@@ -21,9 +21,10 @@ import com.nvt.color.ColorPickerDialog
 class ActivityAdapter(
     private val context: Context,
     val dataset: List<ClickerActivity>,
-    val itemClickedCallback: (ClickerActivity) -> Unit,
-    val itemClickedCallback2: (ClickerActivity) -> Unit,
-    val itemClickedCallback3: (ClickerActivity) -> Unit,
+    val itemClickedCallbackSetTimer: (ClickerActivity) -> Unit,
+    val itemClickedCallbackStopTimer: (ClickerActivity) -> Unit,
+    val itemClickedCallbackChangeSettings: (ClickerActivity) -> Unit,
+    val itemClickedCallback4: (ClickerActivity) -> Unit,
     val viewModel: SettingsViewModel,
     val homeViewModel: HomepageViewModel,
     val statisticsViewModel: StatisticsViewModel
@@ -51,37 +52,35 @@ class ActivityAdapter(
         holder.binding.clickItem.setCardBackgroundColor(data.backgroundColor)
 
         holder.binding.btnClickerPlus.setOnClickListener {
-            if (Calculations.getCurrentDate() == data.lastClickedAt) {
-                Calculations.testToast(context)
-            } else {
-                data.timesClicked++
-                viewModel.timesClicked(data.id.toString(), data.timesClicked)
-                viewModel.plusClicked(data)
-                viewModel.lastClicked(data.id)
-                //  statisticsViewModel.addValueToStatsMap(1, 3)
-                //dont delete before testing
-                /*
-                val name = Calendar.getInstance()
-                    .get(android.icu.util.Calendar.YEAR).toString() + "." + (Calendar.getInstance()
-                    .get(android.icu.util.Calendar.MONTH) + 1).toString()
-                Log.d("name", name)
-                viewModel.firestoreReference.collection("statistics").document(name)
-                    .set(ActivitiesStatistic())
 
-                 */
-                data.lastClickedAt =
-                    "on:${Calculations.getCurrentDate()} at: ${Calculations.getCurrentTime()}"
-                Log.d("timesclicked", data.timesClicked.toString())
-                Log.d("timesclicked", data.toString())
-                //vibration
-                VibrationUtil.Vibration(context)
-                //animation
-                Log.d("timesclicked", data.timesClicked.toString())
-                holder.binding.tvClickerCount.animate().rotation(360f).setDuration(500)
-                    .translationXBy(3f)
-                    .setInterpolator(AccelerateDecelerateInterpolator())
-                    .start()
-            }
+            data.timesClicked++
+            viewModel.timesClicked(data.id.toString(), data.timesClicked)
+            viewModel.plusClicked(data)
+            viewModel.lastClicked(data.id)
+            //  statisticsViewModel.addValueToStatsMap(1, 3)
+            //dont delete before testing
+            /*
+            val name = Calendar.getInstance()
+                .get(android.icu.util.Calendar.YEAR).toString() + "." + (Calendar.getInstance()
+                .get(android.icu.util.Calendar.MONTH) + 1).toString()
+            Log.d("name", name)
+            viewModel.firestoreReference.collection("statistics").document(name)
+                .set(ActivitiesStatistic())
+
+             */
+            data.lastClickedAt =
+                "on:${Calculations.getCurrentDate()} at: ${Calculations.getCurrentTime()}"
+            Log.d("timesclicked", data.timesClicked.toString())
+            Log.d("timesclicked", data.toString())
+            //vibration
+            VibrationUtil.Vibration(context)
+            //animation
+            Log.d("timesclicked", data.timesClicked.toString())
+            holder.binding.tvClickerCount.animate().rotation(360f).setDuration(500)
+                .translationXBy(3f)
+                .setInterpolator(AccelerateDecelerateInterpolator())
+                .start()
+
         }
 
         holder.binding.btnClickerMinus.setOnClickListener {
@@ -134,13 +133,13 @@ class ActivityAdapter(
             colorPicker.show()
         }
         holder.binding.btnSetTimer.setOnClickListener {
-            itemClickedCallback(data)
+            itemClickedCallbackSetTimer(data)
         }
         holder.binding.btnStopTimer.setOnClickListener {
-            itemClickedCallback2(data)
+            itemClickedCallbackStopTimer(data)
         }
         holder.binding.btnItemSettings.setOnClickListener {
-            itemClickedCallback3(data)
+            itemClickedCallbackChangeSettings(data)
         }
 
         /*

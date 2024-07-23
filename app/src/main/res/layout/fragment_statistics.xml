@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@drawable/testbg"
+    android:background="@color/black"
     tools:context=".ui.StatisticsFragment">
 
     <RelativeLayout
@@ -25,25 +25,38 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="20dp"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
+                android:textAlignment="center"
                 android:layout_height="wrap_content"
-                android:text="@string/hello_blank_fragment" />
+                android:text="@string/statistics"
+                android:textSize="30sp"
+                android:textColor="@color/white" />
 
-
-            <com.github.mikephil.charting.charts.LineChart
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginVertical="30dp"
-                android:id="@+id/anotherchart" />
+                android:layout_height="700dp"
+                android:layout_marginVertical="10dp"
+                app:cardBackgroundColor="@color/grey"
+                app:cardCornerRadius="20dp"
+                app:strokeColor="@color/black"
+                app:strokeWidth="3dp">
 
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/pieChart"
-                android:layout_marginVertical="30dp"
+                <com.github.mikephil.charting.charts.HorizontalBarChart
+                    android:id="@+id/horizontalBarChart"
+                    android:layout_width="match_parent"
+                    android:background="@color/black"
+                    android:layout_gravity="center"
+                    android:layout_height="700dp" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <Space
                 android:layout_width="match_parent"
-                android:layout_height="300dp" />
+                android:layout_height="200dp" />
         </LinearLayout>
     </RelativeLayout>
 

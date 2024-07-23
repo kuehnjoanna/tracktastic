@@ -13,7 +13,6 @@ import com.example.tracktastic.R
 import com.example.tracktastic.databinding.FragmentSetNewBinding
 import com.example.tracktastic.ui.viemodels.LoginViewModel
 import com.example.tracktastic.ui.viemodels.SettingsViewModel
-import com.example.tracktastic.utils.NavHelper
 
 class SetNewFragment : Fragment(R.layout.fragment_set_new) {
 
@@ -64,7 +63,7 @@ class SetNewFragment : Fragment(R.layout.fragment_set_new) {
 
                 SettingViewModel.addNewClicker(name, size, increment, decrement, value)
                 findNavController().navigate(SetNewFragmentDirections.actionSetNewFragmentToHomeFragment())
-                NavHelper.isHome = true
+              
             }
         }
 

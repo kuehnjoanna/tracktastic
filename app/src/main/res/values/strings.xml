@@ -24,7 +24,7 @@
     <string name="faq" translatable="false">FAQ</string>
     <string name="chat" translatable="false">Chat</string>
     <string name="issues">Issues</string>
-    <string name="available_languages">You can change language in your phone settings to: English, German, Polish</string>
+    <string name="available_languages">You can change language in your phone settings to: English and German</string>
     <string name="report_problem">Report problem</string>
     <string name="delete_account">Delete Account</string>
     <string name="avatar" translatable="false">Avatar</string>
@@ -39,12 +39,14 @@
     <string name="set_time">Set time</string>
     <string name="field_cant_be_empty">Field cant be empty</string>
     <string name="update_your_name">Update your name</string>
-    <string name="sucessfully_updated">Sucessfully updated</string>
+    <string name="sucessfully_updated">Successfully updated</string>
     <string name="update_your_email">Update your email</string>
-    <string name="confirm_it_is_you">Confirm it it you</string>
+    <string name="confirm_it_is_you">Confirm it is you</string>
     <string name="new_email">New email</string>
     <string name="new_password">New password</string>
     <string name="old_password">Old password</string>
+    <string name="statistics">Statistics</string>
+    <string name="give_new_name">Give new name below</string>
     <string name="are_you_sure_you_want_to_log_out">Are you sure you want to log out?</string>
     <string name="notification_on">Notifications: On</string>
     <string name="notification_off">Notifications: Off</string>

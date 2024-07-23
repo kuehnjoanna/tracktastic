@@ -6,18 +6,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import coil.load
+import com.example.tracktastic.R
 import com.example.tracktastic.databinding.FragmentStatisticsBinding
 import com.example.tracktastic.ui.viemodels.SettingsViewModel
-import com.github.mikephil.charting.components.Description
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieDataSet
-import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
 
 
 class StatisticsFragment : Fragment() {
@@ -26,7 +25,6 @@ class StatisticsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -39,45 +37,73 @@ class StatisticsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        //loading firebase wallpaper
         SettingsViewModel.usEr.observe(viewLifecycleOwner) {
             binding.homelayout.load(it.wallpaperUrl)
         }
-        var list = mutableListOf<Pair<String, Float>>()
-        var list2 = mutableListOf<Pair<String, Float>>()
-        val entries = ArrayList<Entry>()
-        val entries2 = ArrayList<PieEntry>()
-        var index = 0
-        for (activity in SettingsViewModel.repository.clicketestlist.value!!) {
-            list.add(index, activity.name to activity.timeSpent.toFloat())
-            list2.add(index, activity.name to (activity.timesClicked.toFloat() * 10))
-            entries.add(Entry(index.toFloat(), activity.timesClicked.toFloat()))
-            entries2.add(PieEntry(activity.timesClicked.toFloat(), activity.name))
-            index++
 
+        //statistics
+        var activityList = SettingsViewModel.repository.clicketestlist.value!!.toList()
+        val timesClickedChart = arrayListOf<BarEntry>()
+        val minutesSpentChart = arrayListOf<BarEntry>()
+        var i = 0f
+        var value: Float
+        var timeValue: Float
+
+        for (activity in activityList) {
+            //checking if values are negative and solving that, then adding to array
+            if ((activity.timesClicked * 10).toFloat() < 0) {
+                value = -(activity.timesClicked.toFloat())
+                timesClickedChart.add(BarEntry(i, value))
+                Log.d("timesclickedChart", BarEntry(i, value).toString())
+            } else {
+                value = ((activity.timesClicked * 10).toFloat())
+                timesClickedChart.add(BarEntry(i, value))
+                Log.d("timesclickedChart", BarEntry(i, value).toString())
+            }
+            if (activity.timeSpent.toFloat() < 0) {
+                timeValue = -(activity.timeSpent.toFloat())
+                minutesSpentChart.add(BarEntry(i, timeValue))
+                Log.d("minutesSpentChart", BarEntry(i, timeValue).toString())
+            } else {
+                timeValue = (activity.timeSpent.toFloat())
+                minutesSpentChart.add(BarEntry(i, timeValue))
+                Log.d("minutesSpentChart", BarEntry(i, timeValue).toString())
+            }
+
+            i = i + 1f
         }
-        Log.d("list1", list.toString())
-        Log.d("list2", list2.toString())
+        Log.d("timesClickedChart", timesClickedChart.toString())
+        Log.d("minutesSpentChart", minutesSpentChart.toString())
 
-        val dataSet2 = PieDataSet(entries2, "Sample Data")
-        dataSet2.colors = listOf(Color.RED, Color.GREEN, Color.BLUE)
-        dataSet2.valueTextColor = Color.BLACK
-        dataSet2.valueTextSize = 16f
+        //setting and customizing Data
+        val barDataSetClicks = BarDataSet(timesClickedChart, "Times Clicked")
+        val barDataSetMinutes = BarDataSet(minutesSpentChart, "Minutes")
+        barDataSetClicks.color = ContextCompat.getColor(requireContext(), R.color.primary)
+        barDataSetMinutes.color = ContextCompat.getColor(requireContext(), R.color.lavender)
+        barDataSetClicks.valueTextColor = ContextCompat.getColor(requireContext(), R.color.primary)
+        barDataSetMinutes.valueTextColor =
+            ContextCompat.getColor(requireContext(), R.color.lavender)
+        barDataSetClicks.valueTextSize = 20f
+        barDataSetMinutes.valueTextSize = 20f
+        barDataSetClicks.label = "Times clicked"
+        barDataSetMinutes.label = "Minutes"
 
-        val pieData = PieData(dataSet2)
-        binding.pieChart.data = pieData
-        val dataSet = LineDataSet(entries, "Sample Data")
-        dataSet.color = Color.BLUE
-        dataSet.valueTextColor = Color.BLACK
 
-        val lineData = LineData(dataSet)
-        binding.anotherchart.data = lineData
+        val barData = BarData(barDataSetClicks)
+        barData.addDataSet(barDataSetMinutes)
 
-        // Customize chart appearance
-        binding.anotherchart.description = Description().apply { text = "Sample Line Chart" }
-        binding.anotherchart.animateY(1000)
+        //customizing bar chart view
+        binding.horizontalBarChart.animateY(1500)
+        binding.horizontalBarChart.setFitBars(true)
+        binding.horizontalBarChart.data = barData
+        binding.horizontalBarChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+        binding.horizontalBarChart.legend.isEnabled = true
+        binding.horizontalBarChart.legend.textColor = Color.WHITE
 
 
     }
-    /** Setup data for horizontal chart */
+
 
 }

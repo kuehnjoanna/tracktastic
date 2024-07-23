@@ -30,17 +30,15 @@ object Repository {
         get() = _clickertestllist
 
 
-    //Api response result from get default wallpaper
+    //Api response results from getting wallpapers
     private var _wallpaper1 = MutableLiveData<List<Hit>>()
     val wallpaper1: LiveData<List<Hit>>
         get() = _wallpaper1
 
-    //Api response result from get default wallpaper
     private var _wallpaper2 = MutableLiveData<List<Hit>>()
     val wallpaper2: LiveData<List<Hit>>
         get() = _wallpaper2
 
-    //Api response result from get default wallpaper
     private var _wallpaper3 = MutableLiveData<List<Hit>>()
     val wallpaper3: LiveData<List<Hit>>
         get() = _wallpaper3

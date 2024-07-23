@@ -31,6 +31,10 @@ class Timer {
     var isPomodoroOn = false
     var duration: Int = 0
 
+    val duration2: LiveData<Int>
+        get() = _duration2
+    private val _duration2 = MutableLiveData<Int>()
+
     //pomodoro logic
     var pomodoroTimeSelected: Int = 0
     var pomodoroCountDown: CountDownTimer? = null
@@ -58,8 +62,8 @@ class Timer {
         val timeDialog = Dialog(context)
         timeDialog.setContentView(binding.root)
         timeDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        // timeDialog.setContentView(R.layout.edit_dialog)
-        // val timeSet = timeDialog.findViewById<EditText>(R.id.ETeditText)
+        binding.tvMessage.text = "Enter Time Duration"
+        binding.editTitle.text = "Countdown Timeer"
         val timeSet = binding.ETeditText
         binding.btnConfirm.setOnClickListener {
             if (timeSet.text.isEmpty()) {
@@ -70,34 +74,34 @@ class Timer {
                 val hours = givenTime / 3600
                 val minutes = (givenTime % 3600) / 60
                 val seconds = givenTime % 60
-
+                isPomodoroOn = true
                 val time = String.format("%02d:%02d:%02d", hours, minutes, seconds)
                 _pomodoroTime.postValue(time)
-                //   binding.tvTimeLeft.text = time
-                //      binding.btnPlayPause.text = "Start"
                 pomodoroTimeSelected = timeSet.text.toString().toInt()
-                // binding.pbTimer.max = timeSelected
                 _selectedtime.postValue(pomodoroTimeSelected)
             }
             timeDialog.dismiss()
         }
         binding.btnCancel.setOnClickListener {
             timeDialog.dismiss()
+            isPomodoroOn = false
         }
         timeDialog.show()
     }
 
     fun resetPomodoroTime() {
         if (pomodoroCountDown != null) {
-            pomodoroCountDown!!.cancel()
             countDuration(pomodoroProgress)
-            pomodoroProgress = 0
+            pomodoroCountDown!!.cancel()
+
+
             pomodoroTimeSelected = 0
             pauseOffSet = 0
             pomodoroCountDown = null
             isPomodoroOn = false
             //   binding.btnPlayPause.text = "Staert"
-            isPomodoroCountDownStart = true
+            _notification.postValue("You just tracked ${countDuration(pomodoroProgress)} minutes, great job!")
+            isPomodoroCountDownStart = false
             _pomodoroTime.postValue("00:00:00")
             //   binding.pbTimer.progress = 0
             _progress.postValue(0)
@@ -118,18 +122,16 @@ class Timer {
     fun startTimerSetup() {
         if (isPomodoroCountDownStart == false)
         //   binding.btnPlayPause.text = "Pause"
-            startPomodoroTimer(pauseOffSet) {
-
-            }
+            startPomodoroTimer(pauseOffSet)
 
 
     }
 
-    fun startPomodoroTimer(pauseOffSetL: Long, function: () -> Unit) {
+    fun startPomodoroTimer(pauseOffSetL: Long) {
         // Calculate the total time in seconds and progress
         val totalTimeInSeconds = pomodoroTimeSelected * 60
         val totalTimeInMillis = totalTimeInSeconds * 1000L - pauseOffSetL * 1000
-
+        pomodoroProgress = 0
         // Initialize progress
         //  binding.pbTimer.max = totalTimeInSeconds
         //binding.pbTimer.progress = totalTimeInSeconds - pauseOffSetL.toInt()
@@ -156,8 +158,8 @@ class Timer {
 
             override fun onFinish() {
                 //notification that is observed in main activity so the send notification would work
-                _notification.postValue("You just tracked $duration minutes, great job!")
-
+                _notification.postValue("You just tracked ${duration2.value} minutes, great job!")
+                countDuration(pomodoroProgress)
                 resetPomodoroTime()
 
                 //   Toast.makeText(requireContext(), "Times Up!", Toast.LENGTH_SHORT).show()
@@ -167,13 +169,17 @@ class Timer {
 
     }
 
-    fun countDuration(seconds: Int) {
+    fun countDuration(seconds: Int): Int {
         duration = 0
-
+        _duration2.postValue(0)
         val minutes = (seconds % 3600) / 60
         duration = minutes
+        _duration2.postValue(minutes)
 
-        Log.d("duration", minutes.toString())
+        Log.d("durationminutes", minutes.toString())
+        Log.d("duration", duration.toString())
+        Log.d("durationlivedata", duration2.value.toString())
+        return duration
     }
 
     //stopwatch logic
@@ -217,6 +223,7 @@ class Timer {
 
     fun resetTimer() {
         stopTimer()
+        _notification.postValue("You just tracked ${countDuration(stopwatchSeconds)} minutes, great job!")
         _progress.postValue(0)
         countDuration(stopwatchSeconds)
         stopwatchSeconds = 0

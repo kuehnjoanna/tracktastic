@@ -56,17 +56,18 @@ class HomeFragment : Fragment() {
     //binding.pbTimer.progress = totalTimeInSeconds - pauseOffSetL.toInt()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-        //    binding.pbTimer.max = homepageViewModel.timerLogic.pomodoroTimeSelected
-        //  binding.pbTimer.progress = homepageViewModel.timerLogic.pomodoroTimeSelected - homepageViewModel.timerLogic.pauseOffSet.toInt()
 //datasrtore
 
-
+        var time = 0
 //
         settingsViewModel.retrieveDataFromDatabase()
         settingsViewModel.retrieveListFromFirestore()
         binding.text.text = "hello,"
+        homepageViewModel.timerLogic.duration2.observe(viewLifecycleOwner) {
+            time = it
+        }
+
+
         settingsViewModel.firebaseWallpaperUrl.observe(viewLifecycleOwner) {
             binding.homelayout.load(settingsViewModel.firebaseWallpaperUrl.value)
             Log.d("firebasewallpa", settingsViewModel.firebaseWallpaperUrl.value!!)
@@ -129,6 +130,7 @@ class HomeFragment : Fragment() {
             }
 
         }
+
         binding.btnStopTimer.setOnClickListener {
             if (homepageViewModel.timerLogic.isPomodoroOn == false) {
                 homepageViewModel.timerLogic.resetTimer()
@@ -137,10 +139,14 @@ class HomeFragment : Fragment() {
                 binding.tvTimeLeft.text = "00:00:00"
                 Log.d("dur", homepageViewModel.timerLogic.duration.toString())
             } else {
-                homepageViewModel.timerLogic.resetPomodoroTime()
                 if (homepageViewModel.isSelectedItemClicked == true) {
-                    homepageViewModel.addDuration()
+                    //  homepageViewModel.addDuration()
+                    homepageViewModel.addDuration(homepageViewModel.timerLogic.duration)
+                    Log.d("durationTIME", time.toString())
+
                 }
+                homepageViewModel.timerLogic.resetPomodoroTime()
+
                 Log.d("dur2", homepageViewModel.timerLogic.duration.toString())
                 //add dialog to which activity should the time be added?
 
@@ -151,7 +157,7 @@ class HomeFragment : Fragment() {
 
         viewModel.currentUser.observe(viewLifecycleOwner) {
             binding.BTNProfile.setOnClickListener {
-
+                //findNavController().navigate(R.id.blankFragment)
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSettingsFragment())
 
             }
@@ -161,7 +167,7 @@ class HomeFragment : Fragment() {
         helper.attachToRecyclerView(binding.recyclerView)
 
 
-        val itemClickedCallback: (ClickerActivity) -> Unit = {
+        val itemClickedCallbackSetTimer: (ClickerActivity) -> Unit = {
             homepageViewModel.selectedActivityItem(it)
             homepageViewModel.timerLogic.isPomodoroOn = true
 
@@ -173,21 +179,31 @@ class HomeFragment : Fragment() {
 
         }
 
-        val itemClickedCallback2: (ClickerActivity) -> Unit = {
-            homepageViewModel.selectedActivityItem(it)
-            homepageViewModel.timerLogic.isPomodoroOn = false
-            homepageViewModel.timerLogic.resetPomodoroTime()
-            homepageViewModel.addDuration()
-            DialogsAndToasts.createInAppAlert(
-                requireActivity(),
-                R.string.app_name,
-                R.string.duration_updated
-            )
+
+        val itemClickedCallbackStopTimer: (ClickerActivity) -> Unit = {
+            if (homepageViewModel.timerLogic.isPomodoroOn == true) {
+                homepageViewModel.selectedActivityItem(it)
+                // homepageViewModel.addDuration()
+                homepageViewModel.addDuration(homepageViewModel.timerLogic.duration)
+                homepageViewModel.addDuration(homepageViewModel.timerLogic.duration)
+                Log.d("durationTimecallback", time.toString())
+                Log.d("durationTimecallback2", homepageViewModel.timerLogic.duration.toString())
+                homepageViewModel.timerLogic.isPomodoroOn = false
+                homepageViewModel.timerLogic.resetPomodoroTime()
+
+                DialogsAndToasts.createInAppAlert(
+                    requireActivity(),
+                    R.string.app_name,
+                    R.string.duration_updated
+                )
+            }
 
         }
-        val itemClickedCallback3: (ClickerActivity) -> Unit = {
+        val itemClickedCallbackChangeSettings: (ClickerActivity) -> Unit = {
             settingsViewModel.selectedActivityItem(it)
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToUpdateFragment())
+        }
+        val itemClickedCallback4: (ClickerActivity) -> Unit = {
 
         }
 
@@ -202,9 +218,10 @@ class HomeFragment : Fragment() {
             adapter = ActivityAdapter(
                 requireContext(),
                 settingsViewModel.repository.clicketestlist.value!!,
-                itemClickedCallback,
-                itemClickedCallback2,
-                itemClickedCallback3,
+                itemClickedCallbackSetTimer,
+                itemClickedCallbackStopTimer,
+                itemClickedCallbackChangeSettings,
+                itemClickedCallback4,
                 SettingsViewModel(),
                 HomepageViewModel(),
                 StatisticsViewModel()

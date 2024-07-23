@@ -20,8 +20,9 @@ class HomepageViewModel : ViewModel() {
         isSelectedItemClicked = true
     }
 
-    fun addDuration() {
-        val updatedDuration = selectedItem.value!!.timeSpent + timerLogic.duration
+    fun addDuration(time: Int) {
+        //  val updatedDuration = selectedItem.value!!.timeSpent + timerLogic.duration2.value!!
+        val updatedDuration = selectedItem.value!!.timeSpent + time
         FirebaseFirestore.getInstance().collection("users")
             .document(FirebaseAuth.getInstance().currentUser?.uid.toString())
             .collection("activities").document(selectedItem.value!!.id.toString())
