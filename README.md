@@ -31,7 +31,9 @@ functional Profile settings, are also included.
 ## Screenshots
 
 <img src="assets/demo.gif" width="200" height="300" alt="Demo">
+
 ![Screenshot 1](assets/screenrecord1.gif)
+
 ![Screenshot 2](assets/screenrecord2.gif)
 
 ## Technologies Used
