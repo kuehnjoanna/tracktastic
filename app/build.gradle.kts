@@ -79,10 +79,6 @@ dependencies {
     implementation("io.coil-kt:coil:2.4.0")
 
 
-    //Room dependencies
-    implementation("androidx.room:room-runtime:2.6.1")
-    kapt("androidx.room:room-compiler:2.6.1")
-    implementation("androidx.room:room-ktx:2.6.1")
     //navi
 
     implementation("com.github.qamarelsafadi:CurvedBottomNavigation:0.1.3")
@@ -96,12 +92,8 @@ dependencies {
     implementation("com.github.novatien:SmartColorPicker:1.0.2")
 
     //charts
-    // Charts
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
-    implementation("com.github.STRAIBERRY-AI-INC:Straiberry-charts:1.1.0")
 
-    //Datastore
-    implementation("androidx.datastore:datastore-preferences:1.0.0")
     //progressbar
     implementation("com.mikhaellopez:circularprogressbar:3.1.0")
     //alerts
