@@ -2,15 +2,14 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-
-    <color name="some">#FF3131</color>
-    <color name="some2">#ff4567</color>
-    <color name="some3">#567987</color>
+    <color name="sorange">#FF5722</color>
+    <color name="blue">#3F51B5</color>
+    <color name="water">#2196F3</color>
     <color name="transparent">#007D7E80</color>
     <color name="lavender">#8692f7</color>
     <color name="primary">#5F3CB1</color>
     <color name="yellow">#FFC107</color>
     <color name="grey">#88000000</color>
-    <color name="firetruck">#88000000</color>
+    <color name="firetruck">#F44336</color>
     <color name="greyisch">#400C0C0C</color>
 </resources>

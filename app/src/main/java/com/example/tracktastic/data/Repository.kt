@@ -67,7 +67,7 @@ object Repository {
         try {
             //getting Avatar
             Log.d(
-                "avatarresponsel",
+                "avatarresponse",
                 "https://avatar.iran.liara.run/username?username=$first&length=1"
             )
 
@@ -92,7 +92,7 @@ object Repository {
         // return avatarUrl
     }
 
-    //funktion um default wallpaper vom api zu laden
+    //funktionen um wallpaper vom api zu laden
     suspend fun loadDefaultWallpaper() {
         try {
             //getting WALLPAPER

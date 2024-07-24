@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tracktastic.data.Repository
-import com.example.tracktastic.data.model.ActivitiesStatistic
 import com.example.tracktastic.data.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -33,9 +32,6 @@ class LoginViewModel : ViewModel() {
     val notificationPermission: LiveData<Boolean>
         get() = _permission
 
-    // everything repository
-    val repository = Repository
-
     var _info = MutableLiveData<String?>(null)
     val info: LiveData<String?>
         get() = _info
@@ -44,10 +40,6 @@ class LoginViewModel : ViewModel() {
         setUserEnvironment()
     }
 
-    fun addNotificationtext(text: String) {
-
-        //   _notification.postValue(text)
-    }
 
     fun notificationPermission(boolean: Boolean) {
         if (boolean == true) {
@@ -68,8 +60,6 @@ class LoginViewModel : ViewModel() {
             .get(android.icu.util.Calendar.YEAR).toString() + "." + (Calendar.getInstance()
             .get(android.icu.util.Calendar.MONTH) + 1).toString()
         Log.d("name", name)
-        userDataDocumentReference!!.collection("statistics").document(name)
-            .set(ActivitiesStatistic())
 
     }
 

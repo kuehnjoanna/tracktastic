@@ -167,6 +167,12 @@ class SettingsViewModel : ViewModel() {
 
     fun updateUserName(name: String) {
         firestoreReference.update("userName", name)
+        viewModelScope.launch {
+
+            Repository.loadDefaultAvatar(name)
+
+
+        }
     }
 
     fun timesClicked(name: String, timesClicked: Int) {
@@ -188,28 +194,7 @@ class SettingsViewModel : ViewModel() {
     }
 
     fun minusClicked(clicker: ClickerActivity) {
-        clicker.timesClicked = clicker.timesClicked - clicker.decrement
-
-        firestoreReference.collection("activities").document(clicker.id.toString())
-            .update("value", clicker.value)
-    }
-
-    fun updateClickerDecrement(clicker: ClickerActivity, decrement: Int) {
-        clicker.decrement = decrement
-
-        firestoreReference.collection("activities").document(clicker.id.toString())
-            .update("decrement", clicker.decrement)
-    }
-
-    fun updateClickerIncrement(clicker: ClickerActivity, increment: Int) {
-        clicker.increment = increment
-
-        firestoreReference.collection("activities").document(clicker.id.toString())
-            .update("increment", clicker.increment)
-    }
-
-    fun updateClickerValue(clicker: ClickerActivity, value: Int) {
-        clicker.value = value
+        clicker.value = clicker.value - clicker.decrement
 
         firestoreReference.collection("activities").document(clicker.id.toString())
             .update("value", clicker.value)

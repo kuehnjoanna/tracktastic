@@ -221,10 +221,7 @@ class HomeFragment : Fragment() {
                 itemClickedCallbackSetTimer,
                 itemClickedCallbackStopTimer,
                 itemClickedCallbackChangeSettings,
-                itemClickedCallback4,
-                SettingsViewModel(),
-                HomepageViewModel(),
-                StatisticsViewModel()
+                SettingsViewModel()
             )
             binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
             //  binding.recyclerView.layoutManager = StackCardLayoutManager(settingsViewModel.repository.clicketestlist.value!!.size)

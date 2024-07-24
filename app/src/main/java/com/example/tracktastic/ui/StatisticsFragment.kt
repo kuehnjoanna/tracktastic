@@ -45,7 +45,7 @@ class StatisticsFragment : Fragment() {
 
         //statistics
         var activityList = SettingsViewModel.repository.clicketestlist.value!!.toList()
-        val timesClickedChart = arrayListOf<BarEntry>()
+        val valueChart = arrayListOf<BarEntry>()
         val minutesSpentChart = arrayListOf<BarEntry>()
         var i = 0f
         var value: Float
@@ -53,13 +53,13 @@ class StatisticsFragment : Fragment() {
 
         for (activity in activityList) {
             //checking if values are negative and solving that, then adding to array
-            if ((activity.timesClicked * 10).toFloat() < 0) {
-                value = -(activity.timesClicked.toFloat())
-                timesClickedChart.add(BarEntry(i, value))
+            if ((activity.value).toFloat() < 0) {
+                value = -(activity.value.toFloat())
+                valueChart.add(BarEntry(i, value))
                 Log.d("timesclickedChart", BarEntry(i, value).toString())
             } else {
-                value = ((activity.timesClicked * 10).toFloat())
-                timesClickedChart.add(BarEntry(i, value))
+                value = ((activity.value).toFloat())
+                valueChart.add(BarEntry(i, value))
                 Log.d("timesclickedChart", BarEntry(i, value).toString())
             }
             if (activity.timeSpent.toFloat() < 0) {
@@ -74,11 +74,11 @@ class StatisticsFragment : Fragment() {
 
             i = i + 1f
         }
-        Log.d("timesClickedChart", timesClickedChart.toString())
+        Log.d("timesClickedChart", valueChart.toString())
         Log.d("minutesSpentChart", minutesSpentChart.toString())
 
         //setting and customizing Data
-        val barDataSetClicks = BarDataSet(timesClickedChart, "Times Clicked")
+        val barDataSetClicks = BarDataSet(valueChart, "Value")
         val barDataSetMinutes = BarDataSet(minutesSpentChart, "Minutes")
         barDataSetClicks.color = ContextCompat.getColor(requireContext(), R.color.primary)
         barDataSetMinutes.color = ContextCompat.getColor(requireContext(), R.color.lavender)
