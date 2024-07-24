@@ -30,11 +30,9 @@ functional Profile settings, are also included.
 
 ## Screenshots
 
-<img src="assets/demo.gif" width="200" height="300" alt="Demo">
+<img src="assets/screenrecord1.gif" width="200" height="300" alt="Screenshot 1">
 
-![Screenshot 1](assets/screenrecord1.gif)
-
-![Screenshot 2](assets/screenrecord2.gif)
+<img src="assets/screenrecord2.gif" width="200" height="300" alt="Screenshot 2">
 
 ## Technologies Used
 
