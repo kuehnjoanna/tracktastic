@@ -22,9 +22,9 @@ functional Profile settings, are also included.
 
 * Responsive and user-friendly UI.
 
-* Efficient state management using Jetpack Compose.
+* Customising via counter background and wallpaper changes.
 
-* Preview
+* Two timer options.
 
 ## Technologies Used
 
