@@ -30,8 +30,8 @@ functional Profile settings, are also included.
 
 ## Screenshots
 
-![Screenshot 1](./assets/screenrecord1.gif)
-![Screenshot 2](./assets/screenrecord2.gif)
+![Screenshot 1](assets/screenrecord1.gif)
+![Screenshot 2](assets/screenrecord2.gif)
 
 ## Technologies Used
 
