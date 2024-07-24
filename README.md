@@ -29,36 +29,42 @@ functional Profile settings, are also included.
 ## Technologies Used
 
 Kotlin
+
 Firebase
+
 API for [Profile Pictures](https://avatar-placeholder.iran.liara.run)
+
 Api for [Wallpapers](https://pixabay.com)
 
 ## How to run
 
 1.Clone
 the [repository](https://github.com/SI-Classroom-Batch-016/android-praxisprojekt-kuehnjoanna.git)
+
 2.Open the project in Android Studio.
+
 3.Run the app on an emulator or a physical device.
 
 ## Code Structure
 
 The codebase is organized as follows:
 
-⋅⋅* app/src/main/java/com/example/tracktastic/ - Contains the main source code.
-⋅⋅* app/src/main/res/ - Contains resources such as layout files and drawables.
+* app/src/main/java/com/example/tracktastic/ - Contains the main source code.
+*
+* app/src/main/res/ - Contains resources such as layout files and drawables.
 
 ## Dependencies
 
-⋅⋅* Firebase
-⋅⋅* Retrofit
-⋅⋅* Navigation
-⋅⋅* Coil
-⋅⋅* Glide
-⋅⋅* [Curved Bottom Navigation](https://github.com/qamarelsafadi/CurvedBottomNavigation)
-⋅⋅* [Color Picker](https://github.com/novatien/SmartColorPicker)
-⋅⋅* [MP Chart](https://github.com/PhilJay/MPAndroidChart)
-⋅⋅* [Progressbar](https://github.com/lopspower/CircularProgressBar)
-⋅⋅* [Alerts](https://github.com/Tapadoo/Alerter)
+* Firebase
+* Retrofit
+* Navigation
+* Coil
+* Glide
+* [Curved Bottom Navigation](https://github.com/qamarelsafadi/CurvedBottomNavigation)
+* [Color Picker](https://github.com/novatien/SmartColorPicker)
+* [MP Chart](https://github.com/PhilJay/MPAndroidChart)
+* [Progressbar](https://github.com/lopspower/CircularProgressBar)
+* [Alerts](https://github.com/Tapadoo/Alerter)
 
 ## Acknowledgments
 
