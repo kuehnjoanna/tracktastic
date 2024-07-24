@@ -13,19 +13,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.tracktastic.databinding.EditDialogBinding
 
-/*
-statisticks
-how long activity is going for aka you are doing it for x days
-calendar data on which day you did the activity
-you created the activity x dazs ago
-longest streak:
-longest pause
-how many clicks ona day diagram maybe together
-how much time in a day diagram maybe together
-
-
-
- */
 class Timer {
 
     var isPomodoroOn = false
@@ -99,13 +86,10 @@ class Timer {
             pauseOffSet = 0
             pomodoroCountDown = null
             isPomodoroOn = false
-            //   binding.btnPlayPause.text = "Staert"
             _notification.postValue("You just tracked ${countDuration(pomodoroProgress)} minutes, great job!")
             isPomodoroCountDownStart = false
             _pomodoroTime.postValue("00:00:00")
-            //   binding.pbTimer.progress = 0
             _progress.postValue(0)
-            // binding.tvTimeLeft.text = "0"
         }
     }
 
@@ -121,7 +105,6 @@ class Timer {
 
     fun startTimerSetup() {
         if (isPomodoroCountDownStart == false)
-        //   binding.btnPlayPause.text = "Pause"
             startPomodoroTimer(pauseOffSet)
 
 
@@ -132,9 +115,6 @@ class Timer {
         val totalTimeInSeconds = pomodoroTimeSelected * 60
         val totalTimeInMillis = totalTimeInSeconds * 1000L - pauseOffSetL * 1000
         pomodoroProgress = 0
-        // Initialize progress
-        //  binding.pbTimer.max = totalTimeInSeconds
-        //binding.pbTimer.progress = totalTimeInSeconds - pauseOffSetL.toInt()
         _progress.postValue((totalTimeInSeconds - pauseOffSetL).toInt())
         _selectedtime.postValue(totalTimeInSeconds)
         pomodoroCountDown = object : CountDownTimer(totalTimeInMillis, 1000) {
@@ -150,10 +130,8 @@ class Timer {
                 pauseOffSet = totalTimeInSeconds - p0 / 1000
                 isPomodoroCountDownStart = true
 
-                //     binding.pbTimer.progress = (totalTimeInSeconds - timeProgress).toInt()
                 _progress.postValue((totalTimeInSeconds - pomodoroProgress))
 
-                //   binding.tvTimeLeft.text = time
             }
 
             override fun onFinish() {
@@ -162,7 +140,6 @@ class Timer {
                 countDuration(pomodoroProgress)
                 resetPomodoroTime()
 
-                //   Toast.makeText(requireContext(), "Times Up!", Toast.LENGTH_SHORT).show()
             }
 
         }.start()

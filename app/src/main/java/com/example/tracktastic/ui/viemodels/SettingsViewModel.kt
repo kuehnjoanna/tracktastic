@@ -203,6 +203,7 @@ class SettingsViewModel : ViewModel() {
 
     fun addNewClicker(name: String, size: Int, increment: Int, decrement: Int, value: Int) {
         val clicker = ClickerActivity(size, name)
+        val random = Math.random()
         clicker.increment = increment
         clicker.decrement = decrement
         clicker.value = value

@@ -39,11 +39,9 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: LoginViewModel by viewModels()
 
     companion object {
-        // you can put any unique id here, but because I am using Navigation Component I prefer to put it as
-        // the fragment id.
         val HOME_ITEM = R.id.homeFragment
-        val OFFERS_ITEM = R.id.setNewFragment
-        val MORE_ITEM = R.id.statisticsFragment
+        val SET_NEW_ITEM = R.id.setNewFragment
+        val STATISTICS_ITEM = R.id.statisticsFragment
     }
 
 
@@ -53,10 +51,6 @@ class MainActivity : AppCompatActivity() {
         createNotificationChannel()
         checkNotificationPermission()
 
-
-
-
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -65,15 +59,14 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         val bottomNavigationItems = mutableListOf(
             CurvedBottomNavigation.Model(HOME_ITEM, "Home", R.drawable.baseline_home_filled_24),
-            CurvedBottomNavigation.Model(OFFERS_ITEM, "SetNew", R.drawable.baseline_add_24),
-            CurvedBottomNavigation.Model(MORE_ITEM, "Statistics", R.drawable.baseline_bar_chart_24),
+            CurvedBottomNavigation.Model(SET_NEW_ITEM, "SetNew", R.drawable.baseline_add_24),
+            CurvedBottomNavigation.Model(
+                STATISTICS_ITEM,
+                "Statistics",
+                R.drawable.baseline_bar_chart_24
+            ),
         )
-        /*
-        binding.testbtn.setOnClickListener {
-            sendNotification("hey!", "hi", R.drawable.testbg)
-        }
 
-         */
         binding.bottomNavigation.apply {
             bottomNavigationItems.forEach { add(it) }
             setOnClickMenuListener {
@@ -99,8 +92,6 @@ class MainActivity : AppCompatActivity() {
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (navController.currentDestination?.id == R.id.homeFragment ||
-                    //navController.currentDestination?.id == R.id.setNewFragment ||
-                    //navController.currentDestination?.id == R.id.settingsFragment ||
                     binding.bottomNavigation.visibility.equals(View.GONE)
                 ) {
                     AlertDialog.Builder(this@MainActivity)
@@ -112,11 +103,11 @@ class MainActivity : AppCompatActivity() {
                         .show()
                 } else {
                     when (navController.currentDestination!!.id) {
-                        OFFERS_ITEM -> {
+                        SET_NEW_ITEM -> {
                             navController.popBackStack(R.id.homeFragment, false)
                         }
 
-                        MORE_ITEM -> {
+                        STATISTICS_ITEM -> {
                             navController.popBackStack(R.id.homeFragment, false)
                         }
 
@@ -181,7 +172,6 @@ class MainActivity : AppCompatActivity() {
                     Manifest.permission.POST_NOTIFICATIONS
                 ) == PackageManager.PERMISSION_GRANTED -> {
                     // Permission is already granted
-                    //  sendNotification()
                 }
 
                 else -> {
@@ -208,21 +198,14 @@ class MainActivity : AppCompatActivity() {
         }
         val pendingIntent: PendingIntent =
             PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-
         val bitmap = BitmapFactory.decodeResource(applicationContext.resources, picture)
-        val bitmapLargeIcon =
-            BitmapFactory.decodeResource(applicationContext.resources, picture)
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.tracktastic_5)
             .setContentTitle(title)
             .setContentText(description)
-            .setLargeIcon(bitmapLargeIcon)
             .setStyle(NotificationCompat.BigPictureStyle().bigPicture(bitmap))
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-
-
-
         with(NotificationManagerCompat.from(this)) {
             checkNotificationPermission()
             notify(notificationId, builder.build())
@@ -234,8 +217,6 @@ class MainActivity : AppCompatActivity() {
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.cancel(notificationId)
     }
-
-
 }
 
 

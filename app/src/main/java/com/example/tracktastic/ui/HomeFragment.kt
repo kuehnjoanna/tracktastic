@@ -24,14 +24,12 @@ import com.example.tracktastic.ui.adapter.ActivityAdapter
 import com.example.tracktastic.ui.viemodels.HomepageViewModel
 import com.example.tracktastic.ui.viemodels.LoginViewModel
 import com.example.tracktastic.ui.viemodels.SettingsViewModel
-import com.example.tracktastic.ui.viemodels.StatisticsViewModel
 import java.util.Collections
 
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: LoginViewModel by activityViewModels()
-    private val statisticsViewModel: StatisticsViewModel by activityViewModels()
     private val homepageViewModel: HomepageViewModel by activityViewModels()
     lateinit var adapter: ActivityAdapter
     private val settingsViewModel: SettingsViewModel by activityViewModels()
@@ -50,10 +48,7 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(layoutInflater)
         return binding.root
     }
-    //binding.pbTimer.progress = (totalTimeInSeconds - timeProgress).toInt()
 
-    //binding.pbTimer.max = totalTimeInSeconds
-    //binding.pbTimer.progress = totalTimeInSeconds - pauseOffSetL.toInt()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 //datasrtore
