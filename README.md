@@ -16,11 +16,15 @@ functional Profile settings, are also included.
 
 ## Features
 
-⋅⋅* Increment and decrement buttons to adjust the counter value.
-⋅⋅* Display of the current counter value.
-⋅⋅* Responsive and user-friendly UI.
-⋅⋅* Efficient state management using Jetpack Compose.
-⋅⋅* Preview
+* Increment and decrement buttons to adjust the counter value.
+
+* Display of the current counter value.
+
+* Responsive and user-friendly UI.
+
+* Efficient state management using Jetpack Compose.
+
+* Preview
 
 ## Technologies Used
 
