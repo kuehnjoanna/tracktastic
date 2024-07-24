@@ -50,7 +50,7 @@ the [repository](https://github.com/SI-Classroom-Batch-016/android-praxisprojekt
 The codebase is organized as follows:
 
 * app/src/main/java/com/example/tracktastic/ - Contains the main source code.
-*
+
 * app/src/main/res/ - Contains resources such as layout files and drawables.
 
 ## Dependencies
