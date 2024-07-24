@@ -26,6 +26,8 @@ functional Profile settings, are also included.
 
 * Two timer options.
 
+* Statistic chart.
+
 ## Technologies Used
 
 Kotlin
