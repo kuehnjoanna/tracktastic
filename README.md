@@ -28,6 +28,11 @@ functional Profile settings, are also included.
 
 * Statistic chart.
 
+## Screenshots
+
+![Screenshot 1](./assets/screenrecord1.gif)
+![Screenshot 2](./assets/screenrecord2.gif)
+
 ## Technologies Used
 
 Kotlin
