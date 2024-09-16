@@ -24,7 +24,7 @@
     <string name="faq" translatable="false">FAQ</string>
     <string name="chat" translatable="false">Chat</string>
     <string name="issues">Issues</string>
-    <string name="available_languages">You can change language in your phone settings to: English and German</string>
+    <string name="available_languages">You can change language in your phone settings to: English or German</string>
     <string name="report_problem">Report problem</string>
     <string name="delete_account">Delete Account</string>
     <string name="avatar" translatable="false">Avatar</string>
