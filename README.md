@@ -29,10 +29,10 @@ functional Profile settings, are also included.
 * Statistic chart.
 
 ## Screenshots
-
+<div style="display: flex; flex-direction: row; gap: 10px;">
 <img src="assets/screenrecord1.gif" width="200" height="400" alt="Screenshot 1">
 <img src="assets/screenrecord2.gif" width="200" height="400" alt="Screenshot 2">
-
+</div>
 ## Technologies Used
 
 Kotlin
@@ -46,7 +46,7 @@ Api for [Wallpapers](https://pixabay.com)
 ## How to run
 
 1.Clone
-the [repository](https://github.com/SI-Classroom-Batch-016/android-praxisprojekt-kuehnjoanna.git)
+the [repository](https://github.com/kuehnjoanna/tracktastic.git)
 
 2.Open the project in Android Studio.
 
